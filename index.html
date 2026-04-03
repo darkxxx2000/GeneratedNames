@@ -2,31 +2,41 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Free Name Generators</title>
+<title>Free AI Name Generators</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header>
-  <h1>Free Name Generators</h1>
-  <p class="lead">Generate names for characters, cities, brands, objects and more.</p>
+<header class="hero">
+  <h1>Create Unique Names Instantly</h1>
+  <p class="lead">For characters, cities, brands, objects and more.</p>
+
+  <div class="hero-box">
+    <textarea id="homeDesc" placeholder="Describe what you need... e.g: dark fantasy warrior, futuristic city, eco tech brand..."></textarea>
+    <button onclick="goToGenerator()" class="btn">Start Generating</button>
+  </div>
 </header>
 
-<div class="grid">
-  <a href="generators/fantasy-character.html">
-    <div class="card"><h2>Fantasy Character Names</h2></div>
-  </a>
+<section class="grid">
+  <a href="generators/fantasy-character.html"><div class="card"><h2>Fantasy Character Names</h2></div></a>
+  <a href="generators/city.html"><div class="card"><h2>City Name Generator</h2></div></a>
+  <a href="generators/brand.html"><div class="card"><h2>Brand Name Generator</h2></div></a>
+</section>
 
-  <a href="generators/city.html">
-    <div class="card"><h2>City Name Generator</h2></div>
-  </a>
+<footer>
+  <a href="uses.html">Uses</a>
+  <a href="terms.html">Terms & Conditions</a>
+  <a href="privacy.html">Privacy Policy</a>
+  <a href="contact.html">Contact</a>
+</footer>
 
-  <a href="generators/brand.html">
-    <div class="card"><h2>Brand Name Generator</h2></div>
-  </a>
-</div>
-
-<footer>© Name Generators</footer>
+<script>
+function goToGenerator(){
+  const text = document.getElementById('homeDesc').value;
+  localStorage.setItem('desc', text);
+  window.location.href = "generators/fantasy-character.html";
+}
+</script>
 
 </body>
 </html>
