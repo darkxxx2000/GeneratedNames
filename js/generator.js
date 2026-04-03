@@ -1,11 +1,18 @@
 async function generateNames() {
-  const desc = document.getElementById("description").value.trim();
+  const input = document.getElementById("description");
+
+  // Toma lo que venga del index si el campo está vacío
+  const desc = input.value.trim() || localStorage.getItem("desc") || "";
+
   const resultDiv = document.getElementById("result");
 
   if (!desc) {
     alert("Please describe what you need.");
     return;
   }
+
+  // limpia el localStorage para que no se reutilice después
+  localStorage.removeItem("desc");
 
   resultDiv.innerHTML = "Generating names...";
 
