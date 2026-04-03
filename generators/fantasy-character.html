@@ -4,19 +4,18 @@
 <meta charset="UTF-8">
 <title>Fantasy Character Name Generator</title>
 <link rel="stylesheet" href="../styles.css">
-<script src="../js/generator.js"></script>
 </head>
-<body onload="init('../data/fantasy.json','out')">
+<body>
 
 <div class="generator">
   <h1>Fantasy Character Name Generator</h1>
   <p>Describe your character and generate immersive names.</p>
 
-  <textarea id="desc" placeholder="Example: dark warrior from the north, fire mage, shadow assassin..."></textarea>
+  <textarea id="description" placeholder="Example: dark warrior from the north, fire mage, shadow assassin..."></textarea>
 
-  <button id="genBtn" class="btn">Generate Names</button>
+  <button onclick="generateNames()" class="btn">Generate Names</button>
 
-  <div id="out" class="output"></div>
+  <div id="result" class="output"></div>
 </div>
 
 <footer>
@@ -25,6 +24,13 @@
   <a href="../privacy.html">Privacy Policy</a>
   <a href="../contact.html">Contact</a>
 </footer>
+
+<script src="../js/generator.js"></script>
+
+<script>
+document.getElementById("description").value =
+  localStorage.getItem("desc") || "";
+</script>
 
 </body>
 </html>
