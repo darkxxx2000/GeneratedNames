@@ -4,15 +4,33 @@
 <meta charset="UTF-8">
 <title>Brand Name Generator</title>
 <link rel="stylesheet" href="../styles.css">
-<script src="../js/generator.js"></script>
 </head>
-<body onload="init('../data/brand.json','out')">
+<body>
 
 <div class="generator">
   <h1>Brand Name Generator</h1>
-  <div id="out" class="output"></div>
-  <button id="genBtn" class="btn">Generate Again</button>
+  <p>Describe the brand and generate unique, marketable names.</p>
+
+  <textarea id="description" placeholder="Example: eco-friendly tech startup, luxury fashion brand, gaming company..."></textarea>
+
+  <button onclick="generateNames()" class="btn">Generate Names</button>
+
+  <div id="result" class="output"></div>
 </div>
+
+<footer>
+  <a href="../uses.html">Uses</a>
+  <a href="../terms.html">Terms & Conditions</a>
+  <a href="../privacy.html">Privacy Policy</a>
+  <a href="../contact.html">Contact</a>
+</footer>
+
+<script src="../js/generator.js"></script>
+
+<script>
+document.getElementById("description").value =
+  localStorage.getItem("desc") || "";
+</script>
 
 </body>
 </html>
