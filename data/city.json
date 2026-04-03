@@ -1,0 +1,5 @@
+{
+  "prefix": ["New","Fort","Lake","Port","San","North","East","West"],
+  "core": ["haven","field","bridge","wood","view","ford","crest","point"],
+  "suffix": [""," City"," Town"," Heights"," Bay"," Grove"," Hills",""]
+}
