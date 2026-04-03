@@ -1,33 +1,66 @@
-async function loadData(path){
-  const res = await fetch(path);
-  return await res.json();
-}
+async function generateNames(type) {
+  const input = document.getElementById("userInput").value.trim();
+  const output = document.getElementById("output");
 
-function pick(arr){
-  return arr[Math.floor(Math.random()*arr.length)];
-}
-
-function mixWithUserText(name, text){
-  if(!text) return name;
-  const words = text.split(' ');
-  const w = words[Math.floor(Math.random()*words.length)];
-  return name + " " + w.charAt(0).toUpperCase() + w.slice(1);
-}
-
-async function init(jsonPath, outputId){
-  const data = await loadData(jsonPath);
-  const out = document.getElementById(outputId);
-  const input = document.getElementById('desc');
-
-  function run(){
-    let names = [];
-    for(let i=0;i<10;i++){
-      const base = pick(data.prefix)+pick(data.core)+pick(data.suffix);
-      names.push(mixWithUserText(base, input.value));
-    }
-    out.innerHTML = names.join('<br>');
+  if (!input) {
+    output.innerHTML = "Please describe what you need first.";
+    return;
   }
 
-  run();
-  document.getElementById('genBtn').onclick = run;
+  output.innerHTML = "Generating names...";
+
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer YOUR_API_KEY_HERE"
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: `
+You are an expert professional naming assistant.
+
+The user description is ONLY context.
+You must NEVER include any word from the description in the names.
+
+Your job is to create high-quality, original, brandable names.
+            `
+          },
+          {
+            role: "user",
+            content: `
+Create 25 unique names.
+
+Context description: ${input}
+
+Rules:
+- Do NOT repeat or include any word from the description
+- No explanations
+- One name per line
+- Names must sound natural and creative
+- Avoid generic words like "name", "item", "thing"
+            `
+          }
+        ],
+        temperature: 1.1
+      })
+    });
+
+    const data = await response.json();
+    const text = data.choices[0].message.content;
+
+    const names = text.split("\n").filter(n => n.trim() !== "");
+
+    output.innerHTML = names
+      .map(name => `<div class="name-item">${name}</div>`)
+      .join("");
+
+  } catch (err) {
+    output.innerHTML = "Error generating names. Try again.";
+    console.error(err);
+  }
 }
