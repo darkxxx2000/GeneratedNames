@@ -1,9 +1,6 @@
 async function generateNames() {
   const input = document.getElementById("description");
-
-  // Toma lo que venga del index si el campo está vacío
   const desc = input.value.trim() || localStorage.getItem("desc") || "";
-
   const resultDiv = document.getElementById("result");
 
   if (!desc) {
@@ -11,17 +8,13 @@ async function generateNames() {
     return;
   }
 
-  // limpia el localStorage para que no se reutilice después
   localStorage.removeItem("desc");
-
   resultDiv.innerHTML = "Generating names...";
 
   try {
     const response = await fetch("https://name-generator.agustin2025z.workers.dev", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ description: desc })
     });
 
