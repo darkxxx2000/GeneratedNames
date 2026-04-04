@@ -1,142 +1,134 @@
-/* RESET */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* ===== Reset básico ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-  background: linear-gradient(180deg,#0f172a,#0b1120);
-  color:#e2e8f0;
-  min-height:100vh;
+body {
+    font-family: 'Arial', sans-serif;
+    background: #121212; /* fondo oscuro moderno */
+    color: #fff;
+    line-height: 1.6;
+    scroll-behavior: smooth;
 }
 
-/* HERO */
-.hero{
-  text-align:center;
-  padding:90px 20px 60px;
-  background: radial-gradient(circle at top, #1e293b 0%, #0b1120 60%);
-  border-bottom:1px solid #1e293b;
+/* ===== Contenedor principal ===== */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px 0;
 }
 
-.hero h1{
-  font-size:48px;
-  font-weight:700;
-  margin-bottom:15px;
-  letter-spacing:1px;
+/* ===== Título y descripción ===== */
+h1.titulo {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: #ff6600;
+    animation: fadeInDown 1s ease forwards;
 }
 
-.lead{
-  font-size:20px;
-  opacity:0.8;
-  margin-bottom:40px;
+p.descripcion {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ccc;
+    margin-bottom: 40px;
+    animation: fadeInUp 1s ease forwards;
 }
 
-/* BOX */
-.hero-box{
-  max-width:800px;
-  margin:0 auto;
-  background:#0f172a;
-  padding:30px;
-  border-radius:12px;
-  border:1px solid #1e293b;
-  box-shadow:0 0 60px rgba(0,0,0,0.5);
+/* ===== Secciones con imágenes/videos ===== */
+section {
+    margin-bottom: 50px;
+    position: relative;
 }
 
-/* TEXTAREA */
-textarea{
-  width:100%;
-  height:110px;
-  background:#0b1120;
-  border:1px solid #334155;
-  border-radius:8px;
-  color:#e2e8f0;
-  padding:15px;
-  font-size:16px;
-  resize:none;
-  margin-bottom:20px;
+section img,
+section video {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 
-textarea:focus{
-  outline:none;
-  border-color:#38bdf8;
+section img:hover,
+section video:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(255, 102, 0, 0.5);
 }
 
-/* BUTTON */
-.btn{
-  background:#38bdf8;
-  color:#0b1120;
-  border:none;
-  padding:14px 28px;
-  border-radius:8px;
-  font-size:16px;
-  font-weight:600;
-  cursor:pointer;
-  transition:0.2s;
+/* ===== Botones ===== */
+button {
+    display: inline-block;
+    background-color: #ff6600;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 8px 20px rgba(56,189,248,0.4);
+button:hover {
+    background-color: #ff8533;
+    transform: scale(1.05);
 }
 
-/* OUTPUT */
-.output{
-  margin-top:30px;
-  display:grid;
-  gap:12px;
+/* ===== Efectos de scroll (animaciones suaves) ===== */
+@keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-50px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
-.name-item{
-  background:#0b1120;
-  border:1px solid #1e293b;
-  padding:14px;
-  border-radius:8px;
-  font-size:18px;
-  letter-spacing:1px;
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(50px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
-/* GRID CARDS */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:30px;
-  padding:60px 10%;
+/* ===== Navbar sticky opcional ===== */
+nav {
+    position: sticky;
+    top: 0;
+    background-color: #1f1f1f;
+    padding: 10px 0;
+    z-index: 1000;
+    text-align: center;
 }
 
-.card{
-  background:#0f172a;
-  border:1px solid #1e293b;
-  border-radius:12px;
-  padding:40px 20px;
-  text-align:center;
-  transition:0.25s;
-  cursor:pointer;
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
 
-.card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 20px 40px rgba(0,0,0,0.4);
-  border-color:#38bdf8;
+nav a:hover {
+    color: #ff6600;
 }
 
-.card h2{
-  font-size:22px;
+/* ===== Footer simple ===== */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #1f1f1f;
+    color: #ccc;
+    font-size: 0.9rem;
 }
 
-/* FOOTER */
-footer{
-  margin-top:60px;
-  padding:30px;
-  text-align:center;
-  border-top:1px solid #1e293b;
-  font-size:14px;
-  opacity:0.7;
+/* ===== Tarjetas interactivas (opcional para secciones) ===== */
+.card {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-footer a{
-  color:#38bdf8;
-  margin:0 12px;
-  text-decoration:none;
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 102, 0, 0.5);
 }
