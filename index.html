@@ -1,43 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Free AI Name Generators</title>
-<link rel="stylesheet" href="styles.css">
-<script src="js/generator.js"></script>
-</head>
-<body>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0d0d0d;
+  color: #ffffff;
+}
 
-<header class="hero">
-  <h1>Create Unique Names Instantly</h1>
-  <p class="lead">For characters, cities, brands, objects and more.</p>
+.hero {
+  background: linear-gradient(135deg, #111, #1b1b1b);
+  padding: 80px 20px;
+  text-align: center;
+}
 
-  <div class="hero-box">
-    <textarea id="description" placeholder="Describe what you need... e.g: dark fantasy warrior, futuristic city, eco tech brand..."></textarea>
-    <button onclick="generateNames()" class="btn">Generate Names</button>
-  </div>
+.hero-content {
+  max-width: 900px;
+  margin: auto;
+}
 
-  <div id="result" class="output"></div>
-</header>
+h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
 
-<section class="grid">
-  <a href="generators/fantasy-character.html">
-    <div class="card"><h2>Fantasy Character Names</h2></div>
-  </a>
-  <a href="generators/city.html">
-    <div class="card"><h2>City Name Generator</h2></div>
-  </a>
-  <a href="generators/brand.html">
-    <div class="card"><h2>Brand Name Generator</h2></div>
-  </a>
-</section>
+.lead {
+  opacity: 0.8;
+  margin-bottom: 30px;
+  font-size: 18px;
+}
 
-<footer>
-  <a href="uses.html">Uses</a>
-  <a href="terms.html">Terms & Conditions</a>
-  <a href="privacy.html">Privacy Policy</a>
-  <a href="contact.html">Contact</a>
-</footer>
+.hero-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
-</body>
-</html>
+textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 15px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  resize: none;
+}
+
+.btn {
+  padding: 15px;
+  border-radius: 8px;
+  border: none;
+  background: #4f46e5;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #4338ca;
+}
+
+.results-section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.output {
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.name-item {
+  background: #1e1e1e;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.info-strip {
+  text-align: center;
+  padding: 40px 20px;
+  opacity: 0.7;
+  font-size: 16px;
+}
+
+.grid {
+  padding: 60px 20px;
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.card {
+  background: #1a1a1a;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  opacity: 0.6;
+}
+
+footer a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+}
