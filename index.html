@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Free AI Name Generators</title>
 <link rel="stylesheet" href="styles.css">
+<script src="js/generator.js"></script>
 </head>
 <body>
 
@@ -12,15 +13,23 @@
   <p class="lead">For characters, cities, brands, objects and more.</p>
 
   <div class="hero-box">
-    <textarea id="homeDesc" placeholder="Describe what you need... e.g: dark fantasy warrior, futuristic city, eco tech brand..."></textarea>
-    <button onclick="goToGenerator()" class="btn">Start Generating</button>
+    <textarea id="description" placeholder="Describe what you need... e.g: dark fantasy warrior, futuristic city, eco tech brand..."></textarea>
+    <button onclick="generateNames()" class="btn">Generate Names</button>
   </div>
+
+  <div id="result" class="output"></div>
 </header>
 
 <section class="grid">
-  <a href="generators/fantasy-character.html"><div class="card"><h2>Fantasy Character Names</h2></div></a>
-  <a href="generators/city.html"><div class="card"><h2>City Name Generator</h2></div></a>
-  <a href="generators/brand.html"><div class="card"><h2>Brand Name Generator</h2></div></a>
+  <a href="generators/fantasy-character.html">
+    <div class="card"><h2>Fantasy Character Names</h2></div>
+  </a>
+  <a href="generators/city.html">
+    <div class="card"><h2>City Name Generator</h2></div>
+  </a>
+  <a href="generators/brand.html">
+    <div class="card"><h2>Brand Name Generator</h2></div>
+  </a>
 </section>
 
 <footer>
@@ -29,14 +38,6 @@
   <a href="privacy.html">Privacy Policy</a>
   <a href="contact.html">Contact</a>
 </footer>
-
-<script>
-function goToGenerator(){
-  const text = document.getElementById('homeDesc').value;
-  localStorage.setItem('desc', text);
-  window.location.href = "generators/fantasy-character.html";
-}
-</script>
 
 </body>
 </html>
