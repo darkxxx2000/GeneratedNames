@@ -1,140 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Generated Names</title>
-<style>
-    /* Fondo y tipografía general */
-    body {
-        background-color: #0b0c17;
-        color: #ffffff;
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 40px 20px;
-        min-height: 100vh;
-    }
-
-    /* Contenedor del título y descripción */
-    .header {
-        text-align: center;
-        max-width: 600px;
-        margin-bottom: 30px;
-    }
-
-    h1 {
-        font-size: 2.5em;
-        margin-bottom: 10px;
-    }
-
-    .description {
-        font-size: 1.1em;
-        color: #ccc;
-    }
-
-    /* Contenedor del input y botón */
-    .generator-box {
-        width: 100%;
-        max-width: 600px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-bottom: 30px;
-    }
-
-    #nameInput {
-        padding: 12px;
-        border-radius: 5px;
-        border: 1px solid #444;
-        background-color: #1a1b29;
-        color: #fff;
-        font-size: 1em;
-        width: 100%;
-    }
-
-    #generateBtn {
-        padding: 12px;
-        background-color: #2f8fed;
-        border: none;
-        border-radius: 5px;
-        color: #fff;
-        font-size: 1em;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    #generateBtn:hover {
-        background-color: #1c6ad9;
-    }
-
-    /* Resultados */
-    #results {
-        max-width: 600px;
-        width: 100%;
-        background-color: #1a1b29;
-        padding: 15px;
-        border-radius: 5px;
-        color: #fff;
-        min-height: 50px;
-    }
-
-    /* Lista de categorías */
-    .categories {
-        max-width: 600px;
-        width: 100%;
-        margin-top: 30px;
-        font-size: 0.95em;
-        color: #aaa;
-    }
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Landing Page</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Título y descripción -->
-    <div class="header">
-        <h1>Create Unique Names Instantly</h1>
-        <p class="description">Generate names for characters, cities, brands, objects, stories and more.</p>
-    </div>
+    <!-- ===== Navbar ===== -->
+    <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#franquicias">Franquicias</a>
+        <a href="#contacto">Contacto</a>
+    </nav>
 
-    <!-- Caja de input y botón -->
-    <div class="generator-box">
-        <input type="text" id="nameInput" placeholder="Describe what you need... e.g., dark fantasy warrior, futuristic city, eco tech brand">
-        <button id="generateBtn">Generate Names</button>
-    </div>
+    <!-- ===== Sección Inicio ===== -->
+    <section id="inicio" class="container">
+        <h1 class="titulo">Bienvenido a Mi Landing Page</h1>
+        <p class="descripcion">Explora contenido interactivo, imágenes, videos y mucho más.</p>
+        <div style="text-align:center;">
+            <button onclick="alert('Botón funcionando!')">Generar</button>
+        </div>
+    </section>
 
-    <!-- Resultados -->
-    <div id="results">Your generated names will appear here...</div>
+    <!-- ===== Sección Franquicias ===== -->
+    <section id="franquicias" class="container">
+        <h2 class="titulo">Franquicias</h2>
 
-    <!-- Lista de categorías -->
-    <div class="categories">
-        <strong>Generate names for:</strong><br>
-        Fantasy Characters • Cities • Clothing Brands • Startups • Apps • Objects • Stories • Games • And more
-    </div>
+        <div class="card">
+            <h3>Franquicia 1</h3>
+            <img src="https://via.placeholder.com/800x400.png?text=Franquicia+1" alt="Franquicia 1" onclick="alert('Redirigiendo a Franquicia 1')">
+        </div>
 
-    <!-- JavaScript funcional -->
+        <div class="card">
+            <h3>Franquicia 2</h3>
+            <img src="https://via.placeholder.com/800x400.png?text=Franquicia+2" alt="Franquicia 2" onclick="alert('Redirigiendo a Franquicia 2')">
+        </div>
+    </section>
+
+    <!-- ===== Sección Videos ===== -->
+    <section id="videos" class="container">
+        <h2 class="titulo">Videos Destacados</h2>
+        <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
+    </section>
+
+    <!-- ===== Sección Contacto ===== -->
+    <section id="contacto" class="container">
+        <h2 class="titulo">Contacto</h2>
+        <p class="descripcion">Aquí podrías poner un formulario o enlaces de contacto.</p>
+        <div style="text-align:center;">
+            <button onclick="alert('Formulario en construcción')">Contactar</button>
+        </div>
+    </section>
+
+    <!-- ===== Footer ===== -->
+    <footer>
+        &copy; 2026 Mi Landing Page. Todos los derechos reservados.
+    </footer>
+
+    <!-- ===== Script opcional para interacción básica ===== -->
     <script>
-        document.getElementById('generateBtn').addEventListener('click', function() {
-            const query = document.getElementById('nameInput').value.trim();
-            if (!query) {
-                alert("Please describe what you need first!");
-                return;
-            }
-
-            // Ejemplo simple de nombres generados (puedes reemplazar con tu API después)
-            const exampleNames = [
-                "Shadowspire", "NovaCore", "Frostveil", "Lumina", "Ironclad", 
-                "Starforge", "Mysthaven", "Eclipseon", "Draconis", "Aetheria"
-            ];
-
-            // Escoge uno aleatorio para mostrar
-            const randomIndex = Math.floor(Math.random() * exampleNames.length);
-            const generated = `Generated name for "${query}": <strong>${exampleNames[randomIndex]}</strong>`;
-
-            document.getElementById('results').innerHTML = generated;
-        });
+        // Aquí podrías agregar redirecciones reales o interacciones más avanzadas
     </script>
 
 </body>
