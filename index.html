@@ -2,52 +2,140 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Free AI Name Generators</title>
-<link rel="stylesheet" href="styles.css">
-<script src="js/generator.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generated Names</title>
+<style>
+    /* Fondo y tipografía general */
+    body {
+        background-color: #0b0c17;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+        min-height: 100vh;
+    }
+
+    /* Contenedor del título y descripción */
+    .header {
+        text-align: center;
+        max-width: 600px;
+        margin-bottom: 30px;
+    }
+
+    h1 {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    .description {
+        font-size: 1.1em;
+        color: #ccc;
+    }
+
+    /* Contenedor del input y botón */
+    .generator-box {
+        width: 100%;
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+
+    #nameInput {
+        padding: 12px;
+        border-radius: 5px;
+        border: 1px solid #444;
+        background-color: #1a1b29;
+        color: #fff;
+        font-size: 1em;
+        width: 100%;
+    }
+
+    #generateBtn {
+        padding: 12px;
+        background-color: #2f8fed;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #generateBtn:hover {
+        background-color: #1c6ad9;
+    }
+
+    /* Resultados */
+    #results {
+        max-width: 600px;
+        width: 100%;
+        background-color: #1a1b29;
+        padding: 15px;
+        border-radius: 5px;
+        color: #fff;
+        min-height: 50px;
+    }
+
+    /* Lista de categorías */
+    .categories {
+        max-width: 600px;
+        width: 100%;
+        margin-top: 30px;
+        font-size: 0.95em;
+        color: #aaa;
+    }
+
+</style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="hero-content">
-    <h1>Create Unique Names Instantly</h1>
-    <p class="lead">Generate names for characters, cities, brands, objects, stories and more.</p>
-
-    <div class="hero-box">
-      <textarea id="description" placeholder="Describe what you need... e.g: dark fantasy warrior, futuristic city, eco tech brand..."></textarea>
-      <button onclick="generateNames()" class="btn">Generate Names</button>
+    <!-- Título y descripción -->
+    <div class="header">
+        <h1>Create Unique Names Instantly</h1>
+        <p class="description">Generate names for characters, cities, brands, objects, stories and more.</p>
     </div>
-  </div>
-</header>
 
-<section class="results-section">
-  <h2>Generated Names</h2>
-  <div id="result" class="output"></div>
-</section>
+    <!-- Caja de input y botón -->
+    <div class="generator-box">
+        <input type="text" id="nameInput" placeholder="Describe what you need... e.g., dark fantasy warrior, futuristic city, eco tech brand">
+        <button id="generateBtn">Generate Names</button>
+    </div>
 
-<section class="info-strip">
-  <p>Generate names for:</p>
-  <p>• Fantasy Characters • Cities • Clothing Brands • Startups • Apps • Objects • Stories • Games • And more</p>
-</section>
+    <!-- Resultados -->
+    <div id="results">Your generated names will appear here...</div>
 
-<section class="grid">
-  <a href="generators/fantasy-character.html">
-    <div class="card"><h2>Fantasy Character Names</h2></div>
-  </a>
-  <a href="generators/city.html">
-    <div class="card"><h2>City Name Generator</h2></div>
-  </a>
-  <a href="generators/brand.html">
-    <div class="card"><h2>Brand Name Generator</h2></div>
-  </a>
-</section>
+    <!-- Lista de categorías -->
+    <div class="categories">
+        <strong>Generate names for:</strong><br>
+        Fantasy Characters • Cities • Clothing Brands • Startups • Apps • Objects • Stories • Games • And more
+    </div>
 
-<footer>
-  <a href="uses.html">Uses</a>
-  <a href="terms.html">Terms & Conditions</a>
-  <a href="privacy.html">Privacy Policy</a>
-  <a href="contact.html">Contact</a>
-</footer>
+    <!-- JavaScript funcional -->
+    <script>
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            const query = document.getElementById('nameInput').value.trim();
+            if (!query) {
+                alert("Please describe what you need first!");
+                return;
+            }
+
+            // Ejemplo simple de nombres generados (puedes reemplazar con tu API después)
+            const exampleNames = [
+                "Shadowspire", "NovaCore", "Frostveil", "Lumina", "Ironclad", 
+                "Starforge", "Mysthaven", "Eclipseon", "Draconis", "Aetheria"
+            ];
+
+            // Escoge uno aleatorio para mostrar
+            const randomIndex = Math.floor(Math.random() * exampleNames.length);
+            const generated = `Generated name for "${query}": <strong>${exampleNames[randomIndex]}</strong>`;
+
+            document.getElementById('results').innerHTML = generated;
+        });
+    </script>
 
 </body>
 </html>
