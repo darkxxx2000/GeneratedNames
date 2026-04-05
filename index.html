@@ -14,20 +14,13 @@
 
     <textarea id="description" placeholder="Example: names for a fantasy game, tech startup, anime characters..."></textarea>
 
-    <button onclick="goToGenerator()">Generate Names</button>
+    <button onclick="generateNames()">Generate Names</button>
+
+    <div id="result"></div>
   </div>
 
-  <script>
-    function goToGenerator() {
-      const desc = document.getElementById("description").value.trim();
-      if (!desc) {
-        alert("Please describe what you need.");
-        return;
-      }
-      localStorage.setItem("desc", desc);
-      window.location.href = "generator.html";
-    }
-  </script>
+  <!-- AQUÍ se conecta tu cerebro -->
+  <script src="generator.js"></script>
 
 </body>
 </html>
