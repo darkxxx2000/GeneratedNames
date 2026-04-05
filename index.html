@@ -8,21 +8,30 @@
 </head>
 <body>
 
-  <div class="container">
+  <div class="hero">
 
-    <h1 class="titulo">AI Name Generator</h1>
-    <p class="descripcion">Describe what kind of names you need</p>
+    <h1>Create Unique Names Instantly</h1>
+    <p class="subtitle">
+      Generate names for characters, cities, brands, objects, stories and more.
+    </p>
 
-    <div class="card">
+    <div class="generator-box">
       <textarea id="description"
-        placeholder="Example: names for a fantasy game, tech startup, anime characters...">
-      </textarea>
+        placeholder="Describe what you need... e.g: dark fantasy warrior, futuristic city, eco tech brand..."></textarea>
 
       <button onclick="generateNames()">Generate Names</button>
     </div>
 
-    <div id="result" class="card"></div>
+  </div>
 
+  <div class="results-section">
+    <h2>Generated Names</h2>
+    <div id="result"></div>
+
+    <p class="examples">
+      Generate names for:
+      Fantasy Characters • Cities • Clothing Brands • Startups • Apps • Objects • Stories • Games • And more
+    </p>
   </div>
 
   <script src="generator.js"></script>
