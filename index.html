@@ -9,17 +9,22 @@
 <body>
 
   <div class="container">
-    <h1>AI Name Generator</h1>
-    <p>Describe what kind of names you need</p>
 
-    <textarea id="description" placeholder="Example: names for a fantasy game, tech startup, anime characters..."></textarea>
+    <h1 class="titulo">AI Name Generator</h1>
+    <p class="descripcion">Describe what kind of names you need</p>
 
-    <button onclick="generateNames()">Generate Names</button>
+    <div class="card">
+      <textarea id="description"
+        placeholder="Example: names for a fantasy game, tech startup, anime characters...">
+      </textarea>
 
-    <div id="result"></div>
+      <button onclick="generateNames()">Generate Names</button>
+    </div>
+
+    <div id="result" class="card"></div>
+
   </div>
 
-  <!-- AQUÍ se conecta tu cerebro -->
   <script src="generator.js"></script>
 
 </body>
