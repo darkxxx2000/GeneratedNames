@@ -1,68 +1,33 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Landing Page</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Name Generator</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-    <!-- ===== Navbar ===== -->
-    <nav>
-        <a href="#inicio">Inicio</a>
-        <a href="#franquicias">Franquicias</a>
-        <a href="#contacto">Contacto</a>
-    </nav>
+  <div class="container">
+    <h1>AI Name Generator</h1>
+    <p>Describe what kind of names you need</p>
 
-    <!-- ===== Sección Inicio ===== -->
-    <section id="inicio" class="container">
-        <h1 class="titulo">Bienvenido a Mi Landing Page</h1>
-        <p class="descripcion">Explora contenido interactivo, imágenes, videos y mucho más.</p>
-        <div style="text-align:center;">
-            <button onclick="alert('Botón funcionando!')">Generar</button>
-        </div>
-    </section>
+    <textarea id="description" placeholder="Example: names for a fantasy game, tech startup, anime characters..."></textarea>
 
-    <!-- ===== Sección Franquicias ===== -->
-    <section id="franquicias" class="container">
-        <h2 class="titulo">Franquicias</h2>
+    <button onclick="goToGenerator()">Generate Names</button>
+  </div>
 
-        <div class="card">
-            <h3>Franquicia 1</h3>
-            <img src="https://via.placeholder.com/800x400.png?text=Franquicia+1" alt="Franquicia 1" onclick="alert('Redirigiendo a Franquicia 1')">
-        </div>
-
-        <div class="card">
-            <h3>Franquicia 2</h3>
-            <img src="https://via.placeholder.com/800x400.png?text=Franquicia+2" alt="Franquicia 2" onclick="alert('Redirigiendo a Franquicia 2')">
-        </div>
-    </section>
-
-    <!-- ===== Sección Videos ===== -->
-    <section id="videos" class="container">
-        <h2 class="titulo">Videos Destacados</h2>
-        <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls></video>
-    </section>
-
-    <!-- ===== Sección Contacto ===== -->
-    <section id="contacto" class="container">
-        <h2 class="titulo">Contacto</h2>
-        <p class="descripcion">Aquí podrías poner un formulario o enlaces de contacto.</p>
-        <div style="text-align:center;">
-            <button onclick="alert('Formulario en construcción')">Contactar</button>
-        </div>
-    </section>
-
-    <!-- ===== Footer ===== -->
-    <footer>
-        &copy; 2026 Mi Landing Page. Todos los derechos reservados.
-    </footer>
-
-    <!-- ===== Script opcional para interacción básica ===== -->
-    <script>
-        // Aquí podrías agregar redirecciones reales o interacciones más avanzadas
-    </script>
+  <script>
+    function goToGenerator() {
+      const desc = document.getElementById("description").value.trim();
+      if (!desc) {
+        alert("Please describe what you need.");
+        return;
+      }
+      localStorage.setItem("desc", desc);
+      window.location.href = "generator.html";
+    }
+  </script>
 
 </body>
 </html>
