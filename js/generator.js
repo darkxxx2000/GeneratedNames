@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const button = document.getElementById("generateButton");
-  button.addEventListener("click", generateNames);
+  document.getElementById("generateButton").addEventListener("click", generateNames);
 });
 
-function generateNames() {
+async function generateNames() {
   const description = document.getElementById("description").value.trim();
   const result = document.getElementById("result");
 
@@ -12,15 +11,24 @@ function generateNames() {
     return;
   }
 
-  // Aquí puedes poner tu lógica real para generar nombres
-  // Por ahora generaremos 5 nombres de ejemplo simulando un generador
-  const exampleNames = [
-    `${description} Alpha`,
-    `${description} Nova`,
-    `${description} Zenith`,
-    `${description} Echo`,
-    `${description} Orion`
-  ];
+  result.innerHTML = "<p>Generating names...</p>";
 
-  result.innerHTML = "<ul>" + exampleNames.map(name => `<li>${name}</li>`).join("") + "</ul>";
+  try {
+    const response = await fetch("https://TU_SUBDOMINIO_WORKER.cloudflareworkers.com/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: description })
+    });
+
+    const data = await response.json();
+
+    if (!data.names || !Array.isArray(data.names)) {
+      throw new Error("Unexpected API response format.");
+    }
+
+    result.innerHTML = "<ul>" + data.names.map(name => `<li>${name}</li>`).join("") + "</ul>";
+  } catch (error) {
+    console.error(error);
+    result.innerHTML = `<p style="color:red;">Error generating names: ${error.message}</p>`;
+  }
 }
