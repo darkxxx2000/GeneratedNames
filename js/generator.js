@@ -5,15 +5,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 let shownNames = new Set();
 
-// Función para asignar propósito según keywords de la descripción
-function getPurpose(description) {
+// Asignar propósito y color según keywords
+function getPurposeAndColor(description) {
   description = description.toLowerCase();
-  if (description.includes("fashion") || description.includes("clothing") || description.includes("brand")) return "Fashion Brand";
-  if (description.includes("product") || description.includes("object") || description.includes("sell")) return "Product";
-  if (description.includes("comic") || description.includes("character")) return "Comic Character";
-  if (description.includes("social") || description.includes("instagram") || description.includes("youtube")) return "Social Media";
-  if (description.includes("music") || description.includes("song") || description.includes("band")) return "Music Brand";
-  return "General";
+  if (description.includes("fashion") || description.includes("clothing") || description.includes("brand")) 
+    return { purpose: "Fashion Brand", color: "#ff6f61" };
+  if (description.includes("product") || description.includes("object") || description.includes("sell")) 
+    return { purpose: "Product", color: "#4caf50" };
+  if (description.includes("comic") || description.includes("character")) 
+    return { purpose: "Comic Character", color: "#ffca28" };
+  if (description.includes("social") || description.includes("instagram") || description.includes("youtube")) 
+    return { purpose: "Social Media", color: "#1e90ff" };
+  if (description.includes("music") || description.includes("song") || description.includes("band")) 
+    return { purpose: "Music Brand", color: "#9c27b0" };
+  return { purpose: "General", color: "#888" };
 }
 
 async function generateNames(generateMore = false) {
@@ -59,7 +64,7 @@ async function generateNames(generateMore = false) {
 
       popup.innerHTML = `
         <h3 style="margin-bottom:15px;">Generated Names</h3>
-        <ul id="names-list" style="list-style:none; padding:0; color:#fff; text-align:left;"></ul>
+        <div id="names-list" style="display:flex; flex-direction:column; gap:10px;"></div>
         <div style="margin-top:15px;">
           <button id="generateMoreBtn"
             style="margin-right:10px; padding:10px 20px; border:none; border-radius:6px; background:#1e90ff; color:white; cursor:pointer;">
@@ -77,20 +82,25 @@ async function generateNames(generateMore = false) {
     }
 
     const namesList = document.getElementById("names-list");
-    names.forEach(n => {
-      const li = document.createElement("li");
-      li.style.padding = "6px 0";
-      li.style.opacity = "0";
-      li.style.transition = "opacity 0.5s ease";
+    const { purpose, color } = getPurposeAndColor(description);
 
-      const purpose = getPurpose(description);
-      li.innerHTML = `<strong>${n}</strong><br><span style="color:#aaa; font-size:0.85rem;">${purpose}</span>`;
+    names.forEach(n => {
+      const li = document.createElement("div");
+      li.style.padding = "10px";
+      li.style.borderRadius = "8px";
+      li.style.background = "#2a2d3c";
+      li.style.color = "#fff";
+      li.style.opacity = "0";
+      li.style.transition = "opacity 0.5s ease, transform 0.3s ease";
+      li.style.transform = "translateY(10px)";
+
+      li.innerHTML = `<strong>${n}</strong><br><span style="color:${color}; font-size:0.85rem;">${purpose}</span>`;
 
       namesList.appendChild(li);
 
-      // Animación fade-in
       requestAnimationFrame(() => {
         li.style.opacity = "1";
+        li.style.transform = "translateY(0)";
       });
     });
 
