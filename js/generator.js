@@ -3,15 +3,24 @@ document.addEventListener("DOMContentLoaded", () => {
   button.addEventListener("click", () => generateNames(false));
 });
 
-// Guardar nombres ya mostrados para evitar repetidos
 let shownNames = new Set();
 
-// generateMore indica si agregar al popup existente o crear uno nuevo
+// Función para asignar propósito según keywords de la descripción
+function getPurpose(description) {
+  description = description.toLowerCase();
+  if (description.includes("fashion") || description.includes("clothing") || description.includes("brand")) return "Fashion Brand";
+  if (description.includes("product") || description.includes("object") || description.includes("sell")) return "Product";
+  if (description.includes("comic") || description.includes("character")) return "Comic Character";
+  if (description.includes("social") || description.includes("instagram") || description.includes("youtube")) return "Social Media";
+  if (description.includes("music") || description.includes("song") || description.includes("band")) return "Music Brand";
+  return "General";
+}
+
 async function generateNames(generateMore = false) {
   const description = document.getElementById("description").value.trim();
   if (!description) return alert("Please enter a description");
 
-  const workerURL = 'https://name-generator.agustin2025z.workers.dev/'; // tu Worker real
+  const workerURL = 'https://name-generator.agustin2025z.workers.dev/';
 
   try {
     const response = await fetch(workerURL, {
@@ -23,19 +32,12 @@ async function generateNames(generateMore = false) {
     if (!response.ok) throw new Error(`Worker returned status ${response.status}`);
 
     const text = await response.text();
-
-    // Separar nombres por línea y limpiar
     let names = text.split(/\r?\n/).map(n => n.trim()).filter(n => n);
-
-    if (names.length === 0) return alert("No names returned from Worker.");
-
-    // Evitar repetir nombres
     names = names.filter(n => !shownNames.has(n));
     names.forEach(n => shownNames.add(n));
 
-    if (names.length === 0) return alert("All names have already been generated. Try a new description.");
+    if (names.length === 0) return alert("All names already generated. Try a new description.");
 
-    // Crear popup si no existe o si no es "generateMore"
     let popup = document.getElementById("names-popup");
     if (!popup || !generateMore) {
       popup = document.createElement("div");
@@ -52,7 +54,7 @@ async function generateNames(generateMore = false) {
       popup.style.textAlign = "center";
       popup.style.maxWidth = "90%";
       popup.style.maxHeight = "80%";
-      popup.style.overflowY = "auto"; // scroll si hay muchos nombres
+      popup.style.overflowY = "auto";
       document.body.appendChild(popup);
 
       popup.innerHTML = `
@@ -70,22 +72,30 @@ async function generateNames(generateMore = false) {
         </div>
       `;
 
-      // Asociar botones
       document.getElementById("generateMoreBtn").addEventListener("click", () => generateNames(true));
       document.getElementById("closePopupBtn").addEventListener("click", () => popup.remove());
     }
 
-    // Agregar nombres nuevos al listado
     const namesList = document.getElementById("names-list");
     names.forEach(n => {
       const li = document.createElement("li");
-      li.style.padding = "4px 0";
-      li.textContent = n;
+      li.style.padding = "6px 0";
+      li.style.opacity = "0";
+      li.style.transition = "opacity 0.5s ease";
+
+      const purpose = getPurpose(description);
+      li.innerHTML = `<strong>${n}</strong><br><span style="color:#aaa; font-size:0.85rem;">${purpose}</span>`;
+
       namesList.appendChild(li);
+
+      // Animación fade-in
+      requestAnimationFrame(() => {
+        li.style.opacity = "1";
+      });
     });
 
   } catch (error) {
     console.error("Error generating names:", error);
-    alert("Error generating names. Please check your Worker or try again.");
+    alert("Error generating names. Check your Worker or try again.");
   }
 }
