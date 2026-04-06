@@ -10,8 +10,8 @@ async function generateNames() {
   const description = document.getElementById("description").value.trim();
   if (!description) return alert("Please enter a description");
 
-  // URL de tu Worker de Cloudflare
-  const workerURL = 'https://TU_WORKER_URL.workers.dev';
+  // URL de tu Worker de Cloudflare (cambia esto por la tuya)
+  const workerURL = 'https://name-generator.agustin2025z.workers.dev/';
 
   try {
     const response = await fetch(workerURL, {
@@ -22,7 +22,7 @@ async function generateNames() {
 
     const text = await response.text();
 
-    // Separar los nombres por línea y limpiar
+    // Separar nombres por línea y eliminar vacíos
     let names = text.split(/\r?\n/).map(n => n.trim()).filter(n => n);
 
     // Filtrar nombres ya mostrados
@@ -48,15 +48,21 @@ async function generateNames() {
       popup.style.boxShadow = "0 0 20px rgba(0,0,0,0.7)";
       popup.style.zIndex = "1000";
       popup.style.textAlign = "center";
+      popup.style.maxWidth = "90%";
+      popup.style.maxHeight = "80%";
+      popup.style.overflowY = "auto"; // scroll si hay muchos nombres
       document.body.appendChild(popup);
     }
 
     popup.innerHTML = `
-      <h3>Generated Names</h3>
-      <ul style="list-style:none; padding:0; color:#fff;">
-        ${names.map(n => `<li>${n}</li>`).join("")}
+      <h3 style="margin-bottom:15px;">Generated Names</h3>
+      <ul style="list-style:none; padding:0; color:#fff; text-align:left;">
+        ${names.map(n => `<li style="padding:4px 0;">${n}</li>`).join("")}
       </ul>
-      <button onclick="this.parentElement.remove()" style="margin-top:10px; padding:8px 15px; border:none; border-radius:6px; background:#1e90ff; color:white; cursor:pointer;">Close</button>
+      <button onclick="this.parentElement.remove()" 
+        style="margin-top:15px; padding:10px 20px; border:none; border-radius:6px; background:#1e90ff; color:white; cursor:pointer;">
+        Close
+      </button>
     `;
 
   } catch (error) {
