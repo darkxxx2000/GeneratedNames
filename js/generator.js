@@ -1,29 +1,26 @@
-window.addEventListener("DOMContentLoaded", () => {
-  const btn = document.querySelector("button");
-  const input = document.getElementById("description");
+document.addEventListener("DOMContentLoaded", () => {
+  const button = document.getElementById("generateButton");
+  button.addEventListener("click", generateNames);
+});
+
+function generateNames() {
+  const description = document.getElementById("description").value.trim();
   const result = document.getElementById("result");
 
-  btn.addEventListener("click", async () => {
-    const description = input.value.trim();
-    if (!description) {
-      alert("Write something first");
-      return;
-    }
+  if (!description) {
+    result.innerHTML = "<p style='color:red;'>Please enter a description to generate names.</p>";
+    return;
+  }
 
-    result.textContent = "Generating names...";
+  // Aquí puedes poner tu lógica real para generar nombres
+  // Por ahora generaremos 5 nombres de ejemplo simulando un generador
+  const exampleNames = [
+    `${description} Alpha`,
+    `${description} Nova`,
+    `${description} Zenith`,
+    `${description} Echo`,
+    `${description} Orion`
+  ];
 
-    try {
-      const res = await fetch("https://name-generator.agustin2025z.workers.dev", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ description })
-      });
-
-      const text = await res.text();
-      result.textContent = text;
-
-    } catch (err) {
-      result.textContent = "Error: " + err.message;
-    }
-  });
-});
+  result.innerHTML = "<ul>" + exampleNames.map(name => `<li>${name}</li>`).join("") + "</ul>";
+}
