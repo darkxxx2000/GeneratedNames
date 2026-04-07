@@ -1,111 +1,143 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const button = document.getElementById("generateButton");
-  button.addEventListener("click", () => generateNames(false));
+  document.getElementById("generateButton").addEventListener("click", generateNames);
 });
 
-let shownNames = new Set();
+let usedNames = new Set();
+const r = arr => arr[Math.floor(Math.random() * arr.length)];
+const fuse = (a,b) => a.slice(0,a.length/2) + b.slice(b.length/2);
 
-// Asignar propósito y color según keywords
-function getPurposeAndColor(description) {
-  description = description.toLowerCase();
-  if (description.includes("fashion") || description.includes("clothing") || description.includes("brand")) 
-    return { purpose: "Fashion Brand", color: "#ff6f61" };
-  if (description.includes("product") || description.includes("object") || description.includes("sell")) 
-    return { purpose: "Product", color: "#4caf50" };
-  if (description.includes("comic") || description.includes("character")) 
-    return { purpose: "Comic Character", color: "#ffca28" };
-  if (description.includes("social") || description.includes("instagram") || description.includes("youtube")) 
-    return { purpose: "Social Media", color: "#1e90ff" };
-  if (description.includes("music") || description.includes("song") || description.includes("band")) 
-    return { purpose: "Music Brand", color: "#9c27b0" };
-  return { purpose: "General", color: "#888" };
+// -------- CONTEXT DETECTION --------
+function detectContext(text){
+  text = text.toLowerCase();
+
+  if(/perfume|fragrance|scent|aroma/.test(text)) return "perfume";
+  if(/fashion|clothing|apparel|wear|brand/.test(text)) return "fashion";
+  if(/comic|hero|villain|character|fantasy/.test(text)) return "comic";
+  if(/instagram|youtube|tiktok|username|nick/.test(text)) return "social";
+  if(/music|dj|band|record|label/.test(text)) return "music";
+  if(/tech|startup|app|software|ai/.test(text)) return "tech";
+  if(/city|place|kingdom|world/.test(text)) return "places";
+  if(/product|object|item|shop|store/.test(text)) return "product";
+
+  return "generic";
 }
 
-async function generateNames(generateMore = false) {
-  const description = document.getElementById("description").value.trim();
-  if (!description) return alert("Please enter a description");
+// -------- DATA SETS --------
+const data = {
 
-  const workerURL = 'https://name-generator.agustin2025z.workers.dev/';
+perfume:{
+a:["Élan","Noir","Velvet","Aure","Mystic","Lune","Silk","Amber","Opal","Scent","Ivory","Pearl"],
+b:["Essence","Bloom","Aura","Mist","Elixir","Veil","Whisper","Touch","Note","Glow","Dream"]
+},
 
-  try {
-    const response = await fetch(workerURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ description })
-    });
+fashion:{
+a:["Urban","Nova","Velour","Thread","Loom","Drift","Stitch","Mode","Vogue","Weave","Form","Atelier"],
+b:["Apparel","Wear","Line","Fabric","Fit","Studio","Collective","Style","Layer","Craft"]
+},
 
-    if (!response.ok) throw new Error(`Worker returned status ${response.status}`);
+comic:{
+a:["Dread","Nyx","Vortex","Grim","Zephyr","Rogue","Shadow","Blaze","Frost","Void","Raven","Hex"],
+b:["Knight","Sentinel","Blade","Hunter","Phantom","Lord","Rider","Forge","Warden","Strike"]
+},
 
-    const text = await response.text();
-    let names = text.split(/\r?\n/).map(n => n.trim()).filter(n => n);
-    names = names.filter(n => !shownNames.has(n));
-    names.forEach(n => shownNames.add(n));
+social:{
+a:["pixel","neon","echo","mystic","velox","astro","nova","vibe","wave","flux"],
+b:["zone","frame","pulse","grid","cast","hub","core","sync","lab","spot"]
+},
 
-    if (names.length === 0) return alert("All names already generated. Try a new description.");
+music:{
+a:["Sonic","Neon","Pulse","Echo","Wave","Rhythm","Bass","Tempo","Note","Beat"],
+b:["Studio","District","Society","Collective","Lab","Sound","Records","Groove","Flow","Track"]
+},
 
-    let popup = document.getElementById("names-popup");
-    if (!popup || !generateMore) {
-      popup = document.createElement("div");
-      popup.id = "names-popup";
-      popup.style.position = "fixed";
-      popup.style.top = "50%";
-      popup.style.left = "50%";
-      popup.style.transform = "translate(-50%, -50%)";
-      popup.style.background = "#1c1f2c";
-      popup.style.padding = "25px";
-      popup.style.borderRadius = "15px";
-      popup.style.boxShadow = "0 0 25px rgba(0,0,0,0.7)";
-      popup.style.zIndex = "1000";
-      popup.style.textAlign = "center";
-      popup.style.maxWidth = "90%";
-      popup.style.maxHeight = "80%";
-      popup.style.overflowY = "auto";
-      document.body.appendChild(popup);
+tech:{
+a:["Quantum","Nexa","Byte","Core","Hyper","Nano","Cyber","Logic","Data","Pixel"],
+b:["Systems","Labs","Works","Network","AI","Soft","Dynamics","Cloud","Ware","Stack"]
+},
 
-      popup.innerHTML = `
-        <h3 style="margin-bottom:15px;">Generated Names</h3>
-        <div id="names-list" style="display:flex; flex-direction:column; gap:10px;"></div>
-        <div style="margin-top:15px;">
-          <button id="generateMoreBtn"
-            style="margin-right:10px; padding:10px 20px; border:none; border-radius:6px; background:#1e90ff; color:white; cursor:pointer;">
-            Generate More
-          </button>
-          <button id="closePopupBtn"
-            style="padding:10px 20px; border:none; border-radius:6px; background:#ff4c4c; color:white; cursor:pointer;">
-            Close
-          </button>
-        </div>
-      `;
+places:{
+a:["Elder","Iron","Crystal","Storm","Golden","Shadow","Silent","Frozen","Ancient","Silver"],
+b:["Haven","Reach","Vale","Kingdom","Sanctum","Harbor","Citadel","Realm","Terrace"]
+},
 
-      document.getElementById("generateMoreBtn").addEventListener("click", () => generateNames(true));
-      document.getElementById("closePopupBtn").addEventListener("click", () => popup.remove());
-    }
+product:{
+a:["Prime","Ultra","Smart","Fresh","Pure","Rapid","Bright","Clear","Swift","True"],
+b:["Box","Tool","Kit","Gear","Item","Pack","Unit","Device","Set","Craft"]
+},
 
-    const namesList = document.getElementById("names-list");
-    const { purpose, color } = getPurposeAndColor(description);
+generic:{
+a:["Neo","Solar","Crimson","Silent","Epic","Prime","Digital","Velvet","Mystic","Nova"],
+b:["Horizon","Fusion","Sphere","Vision","Core","Storm","Cloud","Galaxy","Edge"]
+}
 
-    names.forEach(n => {
-      const li = document.createElement("div");
-      li.style.padding = "10px";
-      li.style.borderRadius = "8px";
-      li.style.background = "#2a2d3c";
-      li.style.color = "#fff";
-      li.style.opacity = "0";
-      li.style.transition = "opacity 0.5s ease, transform 0.3s ease";
-      li.style.transform = "translateY(10px)";
+};
 
-      li.innerHTML = `<strong>${n}</strong><br><span style="color:${color}; font-size:0.85rem;">${purpose}</span>`;
+// -------- NAME BUILDER --------
+function buildName(ctx){
+  const set = data[ctx];
+  const a = r(set.a);
+  const b = r(set.b);
 
-      namesList.appendChild(li);
+  const styles = [
+    () => `${a} ${b}`,
+    () => `${a}${b}`,
+    () => `${b}${a}`,
+    () => `${fuse(a,b)}`,
+    () => `${fuse(b,a)}`
+  ];
 
-      requestAnimationFrame(() => {
-        li.style.opacity = "1";
-        li.style.transform = "translateY(0)";
-      });
-    });
+  let name;
+  do{
+    name = r(styles)();
+  }while(usedNames.has(name));
 
-  } catch (error) {
-    console.error("Error generating names:", error);
-    alert("Error generating names. Check your Worker or try again.");
+  usedNames.add(name);
+  return name;
+}
+
+// -------- MAIN --------
+function generateNames(){
+  const text = document.getElementById("description").value.trim();
+  if(!text) return alert("Write a description");
+
+  const ctx = detectContext(text);
+
+  const names = [];
+  for(let i=0;i<5;i++){
+    names.push(buildName(ctx));
   }
+
+  showPopup(names);
+}
+
+// -------- POPUP --------
+function showPopup(names){
+  let popup = document.getElementById("names-popup");
+  if(!popup){
+    popup = document.createElement("div");
+    popup.id = "names-popup";
+    document.body.appendChild(popup);
+  }
+
+  popup.innerHTML = `
+    <div style="
+      position:fixed;
+      top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      background:#0f172a;
+      color:white;
+      padding:30px;
+      border-radius:18px;
+      box-shadow:0 0 40px rgba(0,0,0,.6);
+      text-align:center;
+      z-index:9999;
+      width:340px;">
+      <h2>Generated Names</h2>
+      ${names.map(n=>`<div style="margin:8px 0;font-size:18px;">${n}</div>`).join("")}
+      <button onclick="document.getElementById('names-popup').remove()"
+        style="margin-top:15px;padding:8px 18px;border:none;border-radius:8px;background:#2563eb;color:white;cursor:pointer;">
+        Close
+      </button>
+    </div>
+  `;
 }
