@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("generateButton").addEventListener("click", generateNames);
+  const btn = document.getElementById("generateButton");
+  if (btn) btn.addEventListener("click", generateNames);
 });
 
 let usedNames = new Set();
 const r = arr => arr[Math.floor(Math.random() * arr.length)];
 const fuse = (a,b) => a.slice(0,a.length/2) + b.slice(b.length/2);
 
-// -------- CONTEXT DETECTION --------
+// ---------------- CONTEXTO ----------------
 function detectContext(text){
   text = text.toLowerCase();
 
@@ -22,58 +23,21 @@ function detectContext(text){
   return "generic";
 }
 
-// -------- DATA SETS --------
-const data = {
-
-perfume:{
-a:["Élan","Noir","Velvet","Aure","Mystic","Lune","Silk","Amber","Opal","Scent","Ivory","Pearl"],
-b:["Essence","Bloom","Aura","Mist","Elixir","Veil","Whisper","Touch","Note","Glow","Dream"]
-},
-
-fashion:{
-a:["Urban","Nova","Velour","Thread","Loom","Drift","Stitch","Mode","Vogue","Weave","Form","Atelier"],
-b:["Apparel","Wear","Line","Fabric","Fit","Studio","Collective","Style","Layer","Craft"]
-},
-
-comic:{
-a:["Dread","Nyx","Vortex","Grim","Zephyr","Rogue","Shadow","Blaze","Frost","Void","Raven","Hex"],
-b:["Knight","Sentinel","Blade","Hunter","Phantom","Lord","Rider","Forge","Warden","Strike"]
-},
-
-social:{
-a:["pixel","neon","echo","mystic","velox","astro","nova","vibe","wave","flux"],
-b:["zone","frame","pulse","grid","cast","hub","core","sync","lab","spot"]
-},
-
-music:{
-a:["Sonic","Neon","Pulse","Echo","Wave","Rhythm","Bass","Tempo","Note","Beat"],
-b:["Studio","District","Society","Collective","Lab","Sound","Records","Groove","Flow","Track"]
-},
-
-tech:{
-a:["Quantum","Nexa","Byte","Core","Hyper","Nano","Cyber","Logic","Data","Pixel"],
-b:["Systems","Labs","Works","Network","AI","Soft","Dynamics","Cloud","Ware","Stack"]
-},
-
-places:{
-a:["Elder","Iron","Crystal","Storm","Golden","Shadow","Silent","Frozen","Ancient","Silver"],
-b:["Haven","Reach","Vale","Kingdom","Sanctum","Harbor","Citadel","Realm","Terrace"]
-},
-
-product:{
-a:["Prime","Ultra","Smart","Fresh","Pure","Rapid","Bright","Clear","Swift","True"],
-b:["Box","Tool","Kit","Gear","Item","Pack","Unit","Device","Set","Craft"]
-},
-
-generic:{
-a:["Neo","Solar","Crimson","Silent","Epic","Prime","Digital","Velvet","Mystic","Nova"],
-b:["Horizon","Fusion","Sphere","Vision","Core","Storm","Cloud","Galaxy","Edge"]
-}
-
+// ---------------- TU DATA ORIGINAL ----------------
+const data = { /* EXACTAMENTE TU OBJETO data COMPLETO AQUÍ SIN CAMBIAR NADA */
+perfume:{a:["Élan","Noir","Velvet","Aure","Mystic","Lune","Silk","Amber","Opal","Scent","Ivory","Pearl"],b:["Essence","Bloom","Aura","Mist","Elixir","Veil","Whisper","Touch","Note","Glow","Dream"]},
+fashion:{a:["Urban","Nova","Velour","Thread","Loom","Drift","Stitch","Mode","Vogue","Weave","Form","Atelier"],b:["Apparel","Wear","Line","Fabric","Fit","Studio","Collective","Style","Layer","Craft"]},
+comic:{a:["Dread","Nyx","Vortex","Grim","Zephyr","Rogue","Shadow","Blaze","Frost","Void","Raven","Hex"],b:["Knight","Sentinel","Blade","Hunter","Phantom","Lord","Rider","Forge","Warden","Strike"]},
+social:{a:["pixel","neon","echo","mystic","velox","astro","nova","vibe","wave","flux"],b:["zone","frame","pulse","grid","cast","hub","core","sync","lab","spot"]},
+music:{a:["Sonic","Neon","Pulse","Echo","Wave","Rhythm","Bass","Tempo","Note","Beat"],b:["Studio","District","Society","Collective","Lab","Sound","Records","Groove","Flow","Track"]},
+tech:{a:["Quantum","Nexa","Byte","Core","Hyper","Nano","Cyber","Logic","Data","Pixel"],b:["Systems","Labs","Works","Network","AI","Soft","Dynamics","Cloud","Ware","Stack"]},
+places:{a:["Elder","Iron","Crystal","Storm","Golden","Shadow","Silent","Frozen","Ancient","Silver"],b:["Haven","Reach","Vale","Kingdom","Sanctum","Harbor","Citadel","Realm","Terrace"]},
+product:{a:["Prime","Ultra","Smart","Fresh","Pure","Rapid","Bright","Clear","Swift","True"],b:["Box","Tool","Kit","Gear","Item","Pack","Unit","Device","Set","Craft"]},
+generic:{a:["Neo","Solar","Crimson","Silent","Epic","Prime","Digital","Velvet","Mystic","Nova"],b:["Horizon","Fusion","Sphere","Vision","Core","Storm","Cloud","Galaxy","Edge"]}
 };
 
-// -------- NAME BUILDER --------
-function buildName(ctx){
+// ---------------- GENERADOR LOCAL (RESPALDO) ----------------
+function buildLocal(ctx){
   const set = data[ctx];
   const a = r(set.a);
   const b = r(set.b);
@@ -87,30 +51,51 @@ function buildName(ctx){
   ];
 
   let name;
-  do{
-    name = r(styles)();
-  }while(usedNames.has(name));
+  do { name = r(styles)(); }
+  while(usedNames.has(name));
 
   usedNames.add(name);
   return name;
 }
 
-// -------- MAIN --------
-function generateNames(){
+// ---------------- LLAMADA AL WORKER (HF) ----------------
+async function getAIName(prompt){
+  const res = await fetch("https://name-generator.agustin2025z.workers.dev",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ prompt })
+  });
+  const txt = await res.text();
+
+  if (txt.includes('"local":true')) return null;
+
+  const obj = JSON.parse(txt);
+  return obj[0].generated_text.replace(prompt,'').trim();
+}
+
+// ---------------- MAIN ----------------
+async function generateNames(){
   const text = document.getElementById("description").value.trim();
   if(!text) return alert("Write a description");
 
   const ctx = detectContext(text);
+  const prompt = `Invent a creative name for: ${text}`;
 
   const names = [];
+
   for(let i=0;i<5;i++){
-    names.push(buildName(ctx));
+    try{
+      const ai = await getAIName(prompt);
+      names.push(ai || buildLocal(ctx));
+    }catch{
+      names.push(buildLocal(ctx));
+    }
   }
 
   showPopup(names);
 }
 
-// -------- POPUP --------
+// ---------------- POPUP (EL TUYO) ----------------
 function showPopup(names){
   let popup = document.getElementById("names-popup");
   if(!popup){
