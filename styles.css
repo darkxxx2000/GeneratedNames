@@ -16,7 +16,7 @@ body{
 }
 
 main{
-  padding-top: 90px; /* espacio superior pedido */
+  padding-top: 110px; /* aire superior real */
 }
 
 /* Contenedor central */
@@ -34,26 +34,26 @@ h1{
   text-align: center;
   font-size: 3rem;
   color: #c77dff;
-  text-shadow: 0 0 15px #9d4edd, 0 0 30px #5a189a;
-  margin-bottom: 10px;
+  text-shadow: 0 0 20px #9d4edd, 0 0 45px #5a189a;
+  margin-bottom: 12px;
 }
 
 .subtitle{
   text-align: center;
   color: #bbb;
   font-size: 1.2rem;
-  margin-bottom: 35px;
+  margin-bottom: 40px;
 }
 
 /* ========================= */
-/* 🧩 CATEGORÍAS (UNIFORMES)*/
+/* 🧩 CATEGORÍAS            */
 /* ========================= */
 
 .categories{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 18px;
-  margin: 40px 0;
+  margin-bottom: 35px;
 }
 
 .cat-btn{
@@ -84,6 +84,13 @@ h1{
   border-color: #c77dff;
 }
 
+/* ACTIVO */
+.cat-btn.active,
+.social-bar button.active{
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 15px #ffd70088;
+}
+
 /* ========================= */
 /* ⭐ SOCIAL DORADO         */
 /* ========================= */
@@ -94,18 +101,18 @@ h1{
 
 .social-main{
   width: 100%;
-  margin-top: 10px;
-  background: linear-gradient(90deg,#d4af37,#ffd700);
-  color: #000;
-  font-weight: 700;
   height: 60px;
   border-radius: 14px;
   border: none;
   cursor: pointer;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+
+  background: linear-gradient(90deg,#8b6f00,#d4af37);
+  color: white;
 }
 
 .social-main img{
@@ -121,14 +128,24 @@ h1{
   padding: 10px 0;
 }
 
+.social-bar.show{
+  display: flex;
+}
+
 .social-bar button{
   min-width: 60px;
   height: 60px;
   border-radius: 12px;
-  border: none;
-  background: #222;
+  border: 1px solid #333;
+  background: #1b1229;
   cursor: pointer;
   flex: 0 0 auto;
+  transition: .2s;
+}
+
+.social-bar button:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 0 12px #7b2cff66;
 }
 
 .social-bar img{
@@ -141,13 +158,13 @@ h1{
 
 #description{
   width: 100%;
-  padding: 15px;
-  border-radius: 10px;
+  padding: 16px;
+  border-radius: 12px;
   border: 1px solid #5a189a;
   background: #140a1f;
   color: #eee;
   font-size: 1.1rem;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   resize: vertical;
 }
 
@@ -158,9 +175,9 @@ h1{
 #generateButton{
   display: block;
   margin: auto;
-  padding: 14px 30px;
+  padding: 14px 40px;
   font-size: 1.1rem;
-  border-radius: 10px;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
   background: linear-gradient(90deg, #7b2cbf, #c77dff);
@@ -178,17 +195,17 @@ h1{
 /* ========================= */
 
 .results{
-  margin-top: 35px;
+  margin-top: 40px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
+  gap: 18px;
 }
 
 .result-item{
   background: #1a0b28;
   border: 1px solid #5a189a;
-  padding: 15px;
-  border-radius: 10px;
+  padding: 16px;
+  border-radius: 12px;
   text-align: center;
   font-size: 1.1rem;
   transition: 0.25s;
@@ -196,7 +213,7 @@ h1{
 
 .result-item:hover{
   background: #240046;
-  box-shadow: 0 0 12px #7b2cbf;
+  box-shadow: 0 0 14px #7b2cbf;
   cursor: pointer;
 }
 
@@ -205,7 +222,7 @@ h1{
 /* ========================= */
 
 footer{
-  margin-top: 60px;
+  margin-top: 70px;
   text-align: center;
   font-size: 0.9rem;
   color: #888;
@@ -228,7 +245,7 @@ footer a:hover{
 @media (max-width: 900px){
 
   h1{
-    font-size: 2rem;
+    font-size: 2.1rem;
   }
 
   .results{
@@ -247,7 +264,7 @@ footer a:hover{
 @media (max-width: 480px){
 
   h1{
-    font-size: 1.6rem;
+    font-size: 1.7rem;
   }
 
   .subtitle{
@@ -257,44 +274,4 @@ footer a:hover{
   .cat-btn{
     height: 95px;
   }
-}
-/* ================== JS UI FIXES ================== */
-
-/* ACTIVO */
-.cat-btn.active,
-#socialBar button.active,
-#socialMain.active {
-  border: 2px solid #ffd700;
-  box-shadow: 0 0 15px #ffd70088;
-}
-
-/* SOCIAL COMO LAS DEMÁS PERO DORADO */
-.social-main {
-  background: linear-gradient(90deg,#8b6f00,#d4af37);
-  color: white;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* BARRA SOCIAL */
-.social-bar {
-  display: none;
-  margin-top: 10px;
-  gap: 10px;
-}
-
-.social-bar.show {
-  display: flex;
-}
-
-/* RESULTADOS */
-.result-card {
-  border: 1px solid #7b3fe4;
-  padding: 14px;
-  border-radius: 12px;
-  text-align: center;
-  margin: 10px;
-  background: #1b1229;
 }
