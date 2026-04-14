@@ -258,3 +258,43 @@ footer a:hover{
     height: 95px;
   }
 }
+/* ================== JS UI FIXES ================== */
+
+/* ACTIVO */
+.cat-btn.active,
+#socialBar button.active,
+#socialMain.active {
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 15px #ffd70088;
+}
+
+/* SOCIAL COMO LAS DEMÁS PERO DORADO */
+.social-main {
+  background: linear-gradient(90deg,#8b6f00,#d4af37);
+  color: white;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* BARRA SOCIAL */
+.social-bar {
+  display: none;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.social-bar.show {
+  display: flex;
+}
+
+/* RESULTADOS */
+.result-card {
+  border: 1px solid #7b3fe4;
+  padding: 14px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 10px;
+  background: #1b1229;
+}
