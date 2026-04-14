@@ -15,6 +15,10 @@ body{
   min-height: 100vh;
 }
 
+main{
+  padding-top: 90px; /* espacio superior pedido */
+}
+
 /* Contenedor central */
 .container{
   max-width: 1100px;
@@ -42,31 +46,93 @@ h1{
 }
 
 /* ========================= */
-/* 🧩 CATEGORÍAS            */
+/* 🧩 CATEGORÍAS (UNIFORMES)*/
 /* ========================= */
 
 .categories{
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
+  margin: 40px 0;
+}
+
+.cat-btn{
+  height: 110px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(145deg, #240046, #3c096c);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: .25s;
+  text-align: center;
+  font-weight: 600;
+  color: #eee;
+}
+
+.cat-btn img{
+  width: 28px;
+  height: 28px;
+}
+
+.cat-btn:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 0 18px #7b2cff55;
+  border-color: #c77dff;
+}
+
+/* ========================= */
+/* ⭐ SOCIAL DORADO         */
+/* ========================= */
+
+.social-wrapper{
   margin-bottom: 30px;
 }
 
-.categories button{
-  background: linear-gradient(145deg, #240046, #3c096c);
-  border: 1px solid #5a189a;
-  color: #eee;
-  padding: 14px 10px;
-  border-radius: 10px;
+.social-main{
+  width: 100%;
+  margin-top: 10px;
+  background: linear-gradient(90deg,#d4af37,#ffd700);
+  color: #000;
+  font-weight: 700;
+  height: 60px;
+  border-radius: 14px;
+  border: none;
   cursor: pointer;
-  transition: 0.25s ease;
-  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
-.categories button:hover{
-  transform: translateY(-3px);
-  box-shadow: 0 0 15px #7b2cbf;
-  border-color: #c77dff;
+.social-main img{
+  width: 24px;
+}
+
+/* Barra horizontal redes */
+.social-bar{
+  display: none;
+  margin-top: 12px;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.social-bar button{
+  min-width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  border: none;
+  background: #222;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.social-bar img{
+  width: 28px;
 }
 
 /* ========================= */
@@ -165,10 +231,6 @@ footer a:hover{
     font-size: 2rem;
   }
 
-  .categories{
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .results{
     grid-template-columns: 1fr;
   }
@@ -184,15 +246,15 @@ footer a:hover{
 
 @media (max-width: 480px){
 
-  .categories{
-    grid-template-columns: 1fr;
-  }
-
   h1{
     font-size: 1.6rem;
   }
 
   .subtitle{
     font-size: 1rem;
+  }
+
+  .cat-btn{
+    height: 95px;
   }
 }
