@@ -1,20 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Name Generator Pro</title>
-<link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Generated Names</title>
+<link rel="stylesheet" href="css/style.css"/>
 </head>
 
 <body>
 
-<h1>Name Generator</h1>
+<header class="hero">
+  <h1>Generate Powerful Names Instantly</h1>
+  <p>Brand names, characters, products, worlds, usernames and more — powered by contextual generation.</p>
+</header>
 
-<textarea id="description" placeholder="Describe your idea..."></textarea>
+<main class="app">
 
-<button id="generateButton">Generate</button>
+  <!-- INPUT -->
+  <textarea id="description" placeholder="Describe what you want... (dark fantasy, tech brand, social username, etc)"></textarea>
 
-<div id="results"></div>
+  <!-- CATEGORIES -->
+  <div class="categories">
+    <button data-cat="tech">⚡ Tech</button>
+    <button data-cat="fantasy">🐉 Fantasy</button>
+    <button data-cat="dark">🌑 Dark</button>
+    <button data-cat="social">📱 Social</button>
+    <button data-cat="generic">✨ All</button>
+  </div>
+
+  <!-- GENERATE -->
+  <button id="generateButton" class="generate-btn">
+    Generate Names
+  </button>
+
+  <!-- RESULTS -->
+  <section id="results" class="results"></section>
+
+</main>
+
+<footer class="footer">
+  <a href="privacy.html">Privacy</a>
+  <a href="terms.html">Terms</a>
+  <a href="contact.html">Contact</a>
+</footer>
 
 <script src="js/core.js"></script>
 <script src="js/renderer.js"></script>
