@@ -1,3 +1,138 @@
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family: Inter, system-ui, sans-serif;
+  background:#0b0b12;
+  color:white;
+}
+
+/* TOP BAR */
+.topbar{
+  height:60px;
+  display:flex;
+  align-items:center;
+  padding:0 40px;
+  border-bottom:1px solid #1d1d2b;
+}
+
+.logo{
+  font-weight:600;
+  font-size:18px;
+  opacity:.9;
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:60px 20px 30px;
+}
+
+.hero h1{
+  font-size:44px;
+  font-weight:700;
+  margin-bottom:14px;
+}
+
+.hero p{
+  font-size:18px;
+  opacity:.7;
+}
+
+/* WRAPPER */
+.wrapper{
+  max-width:900px;
+  margin:0 auto;
+  padding:20px;
+}
+
+/* CARD (input area) */
+.card{
+  background:#11111a;
+  border:1px solid #1f1f2e;
+  border-radius:20px;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  box-shadow:0 0 60px rgba(0,0,0,.6);
+}
+
+/* TEXTAREA */
+textarea{
+  background:#0e0e16;
+  border:1px solid #222235;
+  border-radius:14px;
+  padding:18px;
+  color:white;
+  font-size:16px;
+  min-height:90px;
+}
+
+/* CATEGORIES */
+.categories{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.categories button{
+  background:#181827;
+  border:1px solid #2a2a3f;
+  padding:8px 16px;
+  border-radius:30px;
+  color:white;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.categories button:hover{
+  background:#6d28d9;
+}
+
+/* GENERATE BUTTON */
+.generate-btn{
+  background:#6d28d9;
+  border:none;
+  padding:14px;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.generate-btn:hover{
+  background:#5b21b6;
+}
+
+/* RESULTS */
+.results{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.card-name{
+  background:#11111a;
+  border:1px solid #1f1f2e;
+  padding:14px;
+  border-radius:12px;
+}
+
+/* FOOTER */
+.footer{
+  margin:60px 0 30px;
+  text-align:center;
+  opacity:.6;
+  font-size:13px;
+}
+
+.footer a{
+  color:white;
+  margin:0 10px;
+  text-decoration:none;
+}
 /* ================= MOBILE PERFECT FIT ================= */
 @media (max-width: 768px){
 
