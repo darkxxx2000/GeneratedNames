@@ -1,75 +1,117 @@
-let selectedCategory = "business";
+// ================= ESTADO GLOBAL =================
+let selectedCategory = null;
 
-// ================== SELECCIÓN DE CATEGORÍAS ==================
-document.addEventListener("DOMContentLoaded", () => {
+const textarea = document.getElementById("description");
+const generateBtn = document.getElementById("generateButton");
+const results = document.getElementById("results");
 
-  // Botones categorías normales
-  document.querySelectorAll(".cat-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      selectedCategory = btn.dataset.cat;
-    });
+const catButtons = document.querySelectorAll(".cat-btn");
+const socialButtons = document.querySelectorAll("#socialBar button");
+const socialMain = document.getElementById("socialMain");
+const socialBar = document.getElementById("socialBar");
+
+// ======= BLOQUEAR ESCRITURA HASTA ELEGIR CATEGORÍA =======
+textarea.disabled = true;
+textarea.placeholder = "Select a category first...";
+
+// ================= SELECCIÓN DE CATEGORÍA =================
+function setCategory(cat, btn) {
+  selectedCategory = cat;
+
+  // quitar activo a todos
+  document.querySelectorAll(".cat-btn, #socialBar button, #socialMain")
+    .forEach(b => b.classList.remove("active"));
+
+  // marcar activo
+  btn.classList.add("active");
+
+  // habilitar textarea
+  textarea.disabled = false;
+  textarea.placeholder = "Describe what you need...";
+  textarea.focus();
+}
+
+// botones normales
+catButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    setCategory(btn.dataset.cat, btn);
   });
-
-  // Botones sociales (barra)
-  document.querySelectorAll(".social-bar button").forEach(btn => {
-    btn.addEventListener("click", () => {
-      selectedCategory = btn.dataset.cat;
-    });
-  });
-
 });
 
-// ================== POOLS INTELIGENTES ==================
-const pools = {
-  business:["Solutions","Group","Corp","Studio","Works","Enterprise","Global","Partners"],
-  brand:["Aura","Nova","Velvet","Echo","Zen","Luxe","Glow","Vibe"],
-  gaming:["Rogue","Blaze","Frost","Hex","Vortex","Nyx","Drift","Phantom"],
-  characters:["Elder","Storm","Rune","Myth","Drake","Shadow","Void","Zephyr"],
-  tech:["Quantum","Byte","Nexa","Core","Logic","Data","Hyper","Nano"],
-  product:["Prime","Ultra","Smart","Rapid","Pure","Bright","Fresh","Swift"],
-  domain:["Hub","Base","Zone","Spot","Lab","Net","World","Place"],
-  creative:["Nova","Mystic","Velour","Silent","Crimson","Solar","Dream","Vision"],
-  pet:["Buddy","Milo","Luna","Rocky","Leo","Zoe","Max","Bella"],
-  username:["Pixel","Neon","Vibe","Wave","Flux","Shadow","Echo","Nova"],
-  instagram:["Insta","Gram","Vibe","Pix","Snap","Mood","Glow","Daily"],
-  tiktok:["Tok","Viral","Clip","Beat","Trend","Loop","Pop","Flash"],
-  youtube:["Tube","Play","Cast","View","Stream","Show","Channel","Media"],
-  twitter:["Tweet","X","Post","Thread","Buzz","Chirp","Talk","Feed"],
-  facebook:["Face","Book","Social","Connect","Wall","Share","Link","Net"],
-  deviantart:["Art","Sketch","Ink","Muse","Draw","Canvas","Craft","Design"],
-  twitch:["Live","Stream","Play","Rush","Arena","Zone","GG","Raid"],
-  kick:["Kick","Live","Rush","Zone","Arena","Play","Stream","GG"]
-};
+// botón social dorado
+socialMain.addEventListener("click", () => {
+  socialBar.classList.toggle("show");
+  setCategory("social", socialMain);
+});
 
-// ================== GENERADOR ==================
-function buildName(words){
-  const a = words[Math.floor(Math.random()*words.length)];
-  const b = words[Math.floor(Math.random()*words.length)];
-  return a + " " + b;
-}
+// botones redes sociales
+socialButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    setCategory(btn.dataset.cat, btn);
+  });
+});
 
-function generateNames(){
-  const words = pools[selectedCategory] || pools.business;
-  let results = [];
+// ================= GENERADOR INTELIGENTE =================
+generateBtn.addEventListener("click", () => {
 
-  for(let i=0;i<9;i++){
-    results.push(buildName(words));
+  if (!selectedCategory) {
+    alert("You must select a category first.");
+    return;
   }
 
-  return results;
-}
+  const desc = textarea.value.trim();
+  if (!desc) {
+    alert("Describe what you need.");
+    return;
+  }
 
-// ================== RENDER ==================
-document.getElementById("generateButton").addEventListener("click", ()=>{
-  const desc = document.getElementById("description").value.trim();
-  if(!desc) return;
+  results.innerHTML = "";
 
-  const names = generateNames();
-  const box = document.getElementById("results");
+  const words = desc.split(" ");
+  const base = words.slice(0, 2).join("");
 
-  box.innerHTML = names
-    .map(n=>`<div class="result-item">${n}</div>`)
-    .join("");
+  function smartNames() {
+    const names = [];
+
+    const prefixes = {
+      business: ["Prime", "Nova", "Vertex", "Core", "Apex"],
+      brand: ["Luma", "Viva", "Zest", "Echo", "Aura"],
+      gaming: ["Shadow", "Rogue", "Phantom", "Blaze", "Fury"],
+      characters: ["Eldor", "Nyra", "Kael", "Zorin", "Lyra"],
+      tech: ["Byte", "Code", "Nex", "Sync", "Logic"],
+      product: ["Flex", "Ultra", "Max", "Smart", "Pure"],
+      domain: ["Get", "Try", "Go", "My", "The"],
+      creative: ["Muse", "Ink", "Dream", "Pixel", "Spark"],
+      pet: ["Buddy", "Luna", "Rocky", "Leo", "Bella"],
+      instagram: ["Insta", "Gram", "Vibe", "Snap", "Pic"],
+      tiktok: ["Tok", "Viral", "Clip", "Loop", "Buzz"],
+      youtube: ["Tube", "Play", "Cast", "Stream", "View"],
+      twitter: ["Tweet", "X", "Post", "Thread", "Byte"],
+      facebook: ["Face", "Book", "Social", "Net", "Hub"],
+      deviantart: ["Art", "Deviant", "Sketch", "Draw", "Ink"],
+      twitch: ["Live", "Stream", "Game", "Play", "Zone"],
+      kick: ["Kick", "Live", "Rush", "Flow", "Cast"],
+      username: ["Real", "Official", "Its", "Hey", "The"]
+    };
+
+    const pool = prefixes[selectedCategory] || ["Pro", "Neo", "Zen"];
+
+    for (let i = 0; i < 9; i++) {
+      const p = pool[Math.floor(Math.random() * pool.length)];
+      const name = p + base + Math.floor(Math.random() * 99);
+      names.push(name);
+    }
+
+    return names;
+  }
+
+  const generated = smartNames();
+
+  generated.forEach(n => {
+    const div = document.createElement("div");
+    div.className = "result-card";
+    div.textContent = n;
+    results.appendChild(div);
+  });
+
 });
