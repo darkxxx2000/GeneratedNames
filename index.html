@@ -1,40 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
 <title>Name Generator Pro</title>
-
-<link rel="stylesheet" href="css/style.css"/>
+<link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<header class="top">
-  <h1>Name Generator Pro</h1>
-  <p>Generate intelligent contextual names for brands, characters, products & more</p>
-</header>
+<h1>Name Generator</h1>
 
-<main class="container">
+<textarea id="description" placeholder="Describe your idea..."></textarea>
 
-  <textarea id="description" placeholder="Describe your idea... (e.g. dark fantasy warrior brand, futuristic AI city)"></textarea>
+<button id="generateButton">Generate</button>
 
-  <button id="generateButton">Generate Names</button>
+<div id="results"></div>
 
-  <div id="results" class="results"></div>
-
-</main>
-
-<div id="modal" class="modal hidden">
-  <div class="modal-content">
-    <h2>Generated Names</h2>
-    <div id="modal-list"></div>
-    <button id="closeModal">Close</button>
-  </div>
-</div>
-
-<script src="js/generator-core.js"></script>
-<script src="js/ui.js"></script>
+<script src="js/core.js"></script>
+<script src="js/renderer.js"></script>
 <script src="js/app.js"></script>
 
 </body>
