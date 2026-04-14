@@ -1,62 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Name Generator</title>
-  <link rel="stylesheet" href="styles.css">
-<script src="js/app.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional Name Generator</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Generate Unique Names with AI</h1>
-    <p>
-      Describe your idea and choose a category. Instantly get creative, brandable,
-      and original names.
-    </p>
-  </section>
+<header>
+  <h1 class="glow">Professional Name Generator</h1>
+  <p>Create names for brands, business, gaming, fantasy, products and social media.</p>
+</header>
 
-  <!-- MAIN CARD -->
-  <div class="wrapper">
-    <div class="card">
+<section class="categories">
 
-      <textarea
-        id="description"
-        placeholder="Describe what you need... (brand, fantasy character, app, clan, project, etc)">
-      </textarea>
+  <button data-cat="business">💼 Business</button>
+  <button data-cat="brand">🏷️ Brand</button>
+  <button data-cat="gaming">🎮 Gaming</button>
+  <button data-cat="fantasy">🧙 Fantasy</button>
+  <button data-cat="tech">💻 Tech</button>
+  <button data-cat="product">📦 Product</button>
+  <button data-cat="domain">🌐 Domain</button>
+  <button data-cat="creative">✨ Creative</button>
+  <button data-cat="pet">🐾 Pet</button>
 
-      <!-- CATEGORIES -->
-      <div class="categories">
-        <button data-cat="brand">Brand</button>
-        <button data-cat="fantasy">Fantasy</button>
-        <button data-cat="tech">Tech</button>
-        <button data-cat="gaming">Gaming</button>
-        <button data-cat="random">Random</button>
-      </div>
+  <div class="social-wrapper">
+    <button id="socialMain" class="gold">🌍 Social Media Names</button>
 
-      <button id="generateButton" class="generate-btn">
-        ✨ Generate Names
-      </button>
-
+    <div id="socialDropdown" class="social-dropdown">
+      <button data-cat="instagram">📸 Instagram</button>
+      <button data-cat="tiktok">🎵 TikTok</button>
+      <button data-cat="youtube">🎥 YouTube</button>
+      <button data-cat="twitter">🐦 Twitter / X</button>
+      <button data-cat="facebook">📘 Facebook</button>
+      <button data-cat="deviantart">🎨 DeviantArt</button>
+      <button data-cat="twitch">🟣 Twitch</button>
+      <button data-cat="kick">🟢 Kick</button>
+      <button data-cat="username">✏️ General Username</button>
     </div>
-
-    <!-- RESULTS -->
-    <div id="result" class="results"></div>
   </div>
 
-  <!-- FOOTER -->
-  <div class="footer">
-    <a href="privacy.html">Privacy</a> |
-    <a href="terms.html">Terms</a> |
-    <a href="uses.html">Uses</a> |
-    <a href="contact.html">Contact</a>
-  </div>
+</section>
 
-  <script src="js/core.js"></script>
-  <script src="js/renderer.js"></script>
-  <script src="js/app.js"></script>
+<section class="generator">
+  <textarea id="description" placeholder="Describe what you need..."></textarea>
+  <button id="generateButton">Generate Names</button>
+</section>
 
+<section id="results"></section>
+
+<footer>
+  <a href="uses.html">Uses</a> •
+  <a href="privacy.html">Privacy</a> •
+  <a href="terms.html">Terms</a> •
+  <a href="contact.html">Contact</a>
+</footer>
+
+<script src="js/app.js"></script>
 </body>
 </html>
