@@ -8,55 +8,113 @@
 </head>
 <body>
 
-<header>
-  <h1 class="glow">Professional Name Generator</h1>
-  <p>Create names for brands, business, gaming, fantasy, products and social media.</p>
-</header>
+<main class="container">
 
-<section class="categories">
+  <h1>Professional Name Generator</h1>
+  <p class="subtitle">
+    Create powerful names for brands, business, characters, products and social media.
+  </p>
 
-  <button data-cat="business">💼 Business</button>
-  <button data-cat="brand">🏷️ Brand</button>
-  <button data-cat="gaming">🎮 Gaming</button>
-  <button data-cat="fantasy">🧙 Fantasy</button>
-  <button data-cat="tech">💻 Tech</button>
-  <button data-cat="product">📦 Product</button>
-  <button data-cat="domain">🌐 Domain</button>
-  <button data-cat="creative">✨ Creative</button>
-  <button data-cat="pet">🐾 Pet</button>
+  <!-- ================= CATEGORÍAS ================= -->
+  <section class="categories">
 
+    <button class="cat-btn" data-cat="business">
+      <img src="https://img.icons8.com/fluency/48/briefcase.png"/>
+      Business
+    </button>
+
+    <button class="cat-btn" data-cat="brand">
+      <img src="https://img.icons8.com/fluency/48/label.png"/>
+      Brand
+    </button>
+
+    <button class="cat-btn" data-cat="gaming">
+      <img src="https://img.icons8.com/fluency/48/controller.png"/>
+      Gaming
+    </button>
+
+    <button class="cat-btn" data-cat="characters">
+      <img src="https://img.icons8.com/fluency/48/wizard.png"/>
+      Fiction Characters
+    </button>
+
+    <button class="cat-btn" data-cat="tech">
+      <img src="https://img.icons8.com/fluency/48/laptop.png"/>
+      Tech / Startup
+    </button>
+
+    <button class="cat-btn" data-cat="product">
+      <img src="https://img.icons8.com/fluency/48/box.png"/>
+      Product
+    </button>
+
+    <button class="cat-btn" data-cat="domain">
+      <img src="https://img.icons8.com/fluency/48/domain.png"/>
+      Domain
+    </button>
+
+    <button class="cat-btn" data-cat="creative">
+      <img src="https://img.icons8.com/fluency/48/idea.png"/>
+      Creative
+    </button>
+
+    <button class="cat-btn" data-cat="pet">
+      <img src="https://img.icons8.com/fluency/48/pet.png"/>
+      Pet Names
+    </button>
+
+  </section>
+
+  <!-- ================= SOCIAL DORADO ================= -->
   <div class="social-wrapper">
-    <button id="socialMain" class="gold">🌍 Social Media Names</button>
+    <button id="socialMain" class="social-main">
+      <img src="https://img.icons8.com/fluency/48/share.png"/>
+      Social Media Names
+    </button>
 
-    <div id="socialDropdown" class="social-dropdown">
-      <button data-cat="instagram">📸 Instagram</button>
-      <button data-cat="tiktok">🎵 TikTok</button>
-      <button data-cat="youtube">🎥 YouTube</button>
-      <button data-cat="twitter">🐦 Twitter / X</button>
-      <button data-cat="facebook">📘 Facebook</button>
-      <button data-cat="deviantart">🎨 DeviantArt</button>
-      <button data-cat="twitch">🟣 Twitch</button>
-      <button data-cat="kick">🟢 Kick</button>
-      <button data-cat="username">✏️ General Username</button>
+    <div id="socialBar" class="social-bar">
+      <button data-cat="instagram"><img src="https://img.icons8.com/color/48/instagram-new.png"/></button>
+      <button data-cat="tiktok"><img src="https://img.icons8.com/color/48/tiktok.png"/></button>
+      <button data-cat="youtube"><img src="https://img.icons8.com/color/48/youtube-play.png"/></button>
+      <button data-cat="twitter"><img src="https://img.icons8.com/color/48/twitterx.png"/></button>
+      <button data-cat="facebook"><img src="https://img.icons8.com/color/48/facebook-new.png"/></button>
+      <button data-cat="deviantart"><img src="https://img.icons8.com/color/48/deviantart.png"/></button>
+      <button data-cat="twitch"><img src="https://img.icons8.com/color/48/twitch.png"/></button>
+      <button data-cat="kick"><img src="https://seeklogo.com/images/K/kick-logo-1E9E1A2C8E-seeklogo.com.png" width="28"/></button>
+      <button data-cat="username"><img src="https://img.icons8.com/fluency/48/user.png"/></button>
     </div>
   </div>
 
-</section>
+  <!-- ================= GENERADOR ================= -->
+  <section class="generator">
+    <textarea id="description" placeholder="Describe what you need..."></textarea>
+    <button id="generateButton">Generate Names</button>
+  </section>
 
-<section class="generator">
-  <textarea id="description" placeholder="Describe what you need..."></textarea>
-  <button id="generateButton">Generate Names</button>
-</section>
+  <!-- ================= RESULTADOS ================= -->
+  <section id="results" class="results"></section>
 
-<section id="results"></section>
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <a href="uses.html">Uses</a> •
+    <a href="privacy.html">Privacy</a> •
+    <a href="terms.html">Terms</a> •
+    <a href="contact.html">Contact</a>
+  </footer>
 
-<footer>
-  <a href="uses.html">Uses</a> •
-  <a href="privacy.html">Privacy</a> •
-  <a href="terms.html">Terms</a> •
-  <a href="contact.html">Contact</a>
-</footer>
+</main>
 
 <script src="js/app.js"></script>
+<script>
+  // abrir / cerrar barra social
+  const socialMain = document.getElementById("socialMain");
+  const socialBar = document.getElementById("socialBar");
+
+  socialMain.addEventListener("click", () => {
+    socialBar.style.display =
+      socialBar.style.display === "flex" ? "none" : "flex";
+  });
+</script>
+
 </body>
 </html>
