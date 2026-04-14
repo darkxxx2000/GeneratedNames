@@ -1,9 +1,9 @@
-document.getElementById("generateButton").addEventListener("click", async () => {
+document.getElementById("generateButton").addEventListener("click", () => {
   const text = document.getElementById("description").value;
 
-  if(!text) return;
+  if (!text) return;
 
-  const { results } = generateBatch(text);
+  const { ctx, results } = generate(text);
 
-  render(results);
+  render(results, ctx);
 });
