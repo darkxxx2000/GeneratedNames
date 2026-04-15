@@ -92,33 +92,12 @@ h1{
 }
 
 /* ========================= */
-/* ⭐ SOCIAL DORADO         */
+/* ⭐ SOCIAL BUTTON          */
 /* ========================= */
 
-.social-wrapper{
-  display: contents;
-}
-
 .social-main{
-  height: 110px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
   background: linear-gradient(145deg,#8b6f00,#d4af37);
   color: #fff;
-  font-weight: 600;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  cursor: pointer;
-  transition: .25s;
-  text-align: center;
-}
-
-.social-main img{
-  width: 28px;
-  height: 28px;
 }
 
 .social-main:hover{
@@ -131,16 +110,17 @@ h1{
 /* ========================= */
 
 .social-bar{
-  display: none;
   grid-column: 1 / -1;
-  margin-top: 14px;
+  margin-top: 15px;
 
   width: 100%;
-  display: grid;
+
+  display: none; /* oculto por defecto */
   grid-template-columns: repeat(9, 1fr);
   gap: 10px;
 }
 
+/* SOLO cuando está activo */
 .social-bar.show{
   display: grid;
 }
@@ -173,19 +153,32 @@ h1{
 }
 
 /* ========================= */
-/* 📝 ÁREA DE TEXTO         */
+/* 📝 ÁREA DE TEXTO (3D PRO) */
 /* ========================= */
 
 #description{
   width: 100%;
-  padding: 16px;
-  border-radius: 12px;
-  border: 1px solid #5a189a;
-  background: #140a1f;
-  color: #eee;
-  font-size: 1.1rem;
+  min-height: 150px;
+
+  padding: 20px;
   margin-bottom: 25px;
+
+  border-radius: 14px;
+  border: 1px solid #2a2a2a;
+
+  background: linear-gradient(145deg, #1a1a1a, #222);
+
+  color: #eee;
+  font-size: 1.05rem;
+  line-height: 1.5;
+
   resize: vertical;
+
+  box-shadow:
+    8px 8px 16px rgba(0,0,0,0.7),
+    -4px -4px 10px rgba(255,255,255,0.05);
+
+  outline: none;
 }
 
 /* ========================= */
@@ -275,6 +268,10 @@ footer a:hover{
   #generateButton{
     width: 100%;
   }
+
+  .social-bar{
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 /* ============================= */
@@ -293,5 +290,9 @@ footer a:hover{
 
   .cat-btn{
     height: 95px;
+  }
+
+  .social-bar{
+    grid-template-columns: repeat(2, 1fr);
   }
 }
