@@ -30,7 +30,7 @@ const categoryStyles = {
   },
   brand: {
     tone: ["Nexa","Luma","Vexa","Zyra","Kairo","Auro"],
-    suffix: ["",""]
+    suffix: [""]
   },
   gaming: {
     tone: ["Shadow","Rogue","Phantom","Blaze","Fury","Venom"],
@@ -71,6 +71,38 @@ const categoryStyles = {
   username: { tone:["Real","Hey","Its","The","Official"], suffix:["xo","yt",""] }
 };
 
+// ================= INTELLIGENT PARSER =================
+function extractKeywords(text){
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g,"")
+    .split(" ")
+    .filter(w => w.length > 3)
+    .slice(0,4)
+    .map(capitalize);
+}
+
+function detectIntent(words){
+  const joined = words.join(" ").toLowerCase();
+
+  if(joined.match(/dark|shadow|night|evil|horror/)) return "dark";
+  if(joined.match(/cute|sweet|soft|baby|pet/)) return "cute";
+  if(joined.match(/tech|ai|digital|cyber|future/)) return "tech";
+  if(joined.match(/fast|speed|energy|power/)) return "power";
+  if(joined.match(/magic|fantasy|dragon|king|queen/)) return "fantasy";
+
+  return "neutral";
+}
+
+const intentModifiers = {
+  dark: ["Shadow","Void","Night","Obsidian"],
+  cute: ["Mimi","Bunny","Lulu","Puff"],
+  tech: ["Neo","Quantum","Byte","Nex"],
+  power: ["Ultra","Hyper","Turbo","Volt"],
+  fantasy: ["Eld","Myth","Rune","Arc"],
+  neutral: [""]
+};
+
 // ================= CATEGORY =================
 function setCategory(cat, btn){
   selectedCategory = cat;
@@ -97,20 +129,14 @@ socialButtons.forEach(btn=>{
   btn.addEventListener("click", ()=>setCategory(btn.dataset.cat, btn));
 });
 
-// ================= GENERATION ENGINE (CATEGORY CONTEXT) =================
+// ================= GENERATION ENGINE (INTELIGENTE REAL) =================
 function generateBatch(userText){
 
   const style = categoryStyles[selectedCategory];
 
-  const cleanWords = userText
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g,"")
-    .split(" ")
-    .filter(w=>w.length>3);
-
-  const keyword = cleanWords[0] 
-      ? capitalize(cleanWords[0]) 
-      : "";
+  const keywords = extractKeywords(userText);
+  const intent = detectIntent(keywords);
+  const modifierPool = intentModifiers[intent];
 
   const resultsSet = new Set();
 
@@ -118,50 +144,51 @@ function generateBatch(userText){
 
     const tone = random(style.tone);
     const suffix = random(style.suffix);
+    const modifier = random(modifierPool);
+    const kw1 = keywords[0] || "";
 
     let name = "";
 
     switch(selectedCategory){
 
       case "business":
-        name = tone + " " + suffix;
+        name = `${tone} ${modifier} ${suffix}`;
         break;
 
       case "brand":
-        name = tone + keyword;
+        name = `${modifier}${kw1}${tone}`;
         break;
 
       case "gaming":
-        name = tone + keyword + suffix;
+        name = `${modifier}${tone}${kw1}${suffix}`;
         break;
 
       case "characters":
-        name = tone + " " + suffix;
+        name = `${tone} ${modifier}${kw1}`;
         break;
 
       case "tech":
-        name = tone + " " + keyword + " " + suffix;
+        name = `${modifier} ${kw1} ${tone} ${suffix}`;
         break;
 
       case "product":
-        name = tone + " " + keyword + " " + suffix;
+        name = `${tone} ${kw1} ${suffix}`;
         break;
 
       case "domain":
-        name = tone + keyword.toLowerCase() + suffix;
+        name = `${tone}${kw1}${suffix}`.toLowerCase();
         break;
 
       case "creative":
-        name = tone + " " + keyword;
+        name = `${modifier} ${kw1} ${tone}`;
         break;
 
       case "pet":
-        name = tone;
+        name = `${modifier}${tone}`;
         break;
 
-      // SOCIAL / USERNAMES
       default:
-        name = (tone + keyword + suffix).replace(/\s/g,"");
+        name = `${modifier}${kw1}${tone}${suffix}`.replace(/\s/g,"");
     }
 
     resultsSet.add(name.trim());
