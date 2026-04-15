@@ -18,14 +18,11 @@ textarea.placeholder = "Select a category first...";
 function setCategory(cat, btn) {
   selectedCategory = cat;
 
-  // quitar activo a todos
-  document.querySelectorAll(".cat-btn, #socialBar button, #socialMain")
+  document.querySelectorAll(".cat-btn, #socialBar button")
     .forEach(b => b.classList.remove("active"));
 
-  // marcar activo
   btn.classList.add("active");
 
-  // habilitar textarea
   textarea.disabled = false;
   textarea.placeholder = "Describe what you need...";
   textarea.focus();
@@ -38,10 +35,9 @@ catButtons.forEach(btn => {
   });
 });
 
-// botón social dorado
+// botón social SOLO despliega (NO es categoría)
 socialMain.addEventListener("click", () => {
   socialBar.classList.toggle("show");
-  setCategory("social", socialMain);
 });
 
 // botones redes sociales
@@ -67,51 +63,47 @@ generateBtn.addEventListener("click", () => {
 
   results.innerHTML = "";
 
-  const words = desc.split(" ");
-  const base = words.slice(0, 2).join("");
+  // 🔥 palabras limpias y capitalizadas
+  const words = desc
+    .split(" ")
+    .filter(w => w.length > 3)
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1));
 
-  function smartNames() {
-    const names = [];
+  const prefixes = {
+    business: ["Prime", "Nova", "Vertex", "Core", "Apex"],
+    brand: ["Luma", "Viva", "Zest", "Echo", "Aura"],
+    gaming: ["Shadow", "Rogue", "Phantom", "Blaze", "Fury"],
+    characters: ["Eldor", "Nyra", "Kael", "Zorin", "Lyra"],
+    tech: ["Byte", "Code", "Nex", "Sync", "Logic"],
+    product: ["Flex", "Ultra", "Max", "Smart", "Pure"],
+    domain: ["Get", "Try", "Go", "My", "The"],
+    creative: ["Muse", "Ink", "Dream", "Pixel", "Spark"],
+    pet: ["Buddy", "Luna", "Rocky", "Leo", "Bella"],
+    instagram: ["Insta", "Gram", "Vibe", "Snap", "Pic"],
+    tiktok: ["Tok", "Viral", "Clip", "Loop", "Buzz"],
+    youtube: ["Tube", "Play", "Cast", "Stream", "View"],
+    twitter: ["Tweet", "X", "Post", "Thread", "Byte"],
+    facebook: ["Face", "Book", "Social", "Net", "Hub"],
+    deviantart: ["Art", "Deviant", "Sketch", "Draw", "Ink"],
+    twitch: ["Live", "Stream", "Game", "Play", "Zone"],
+    kick: ["Kick", "Live", "Rush", "Flow", "Cast"],
+    username: ["Real", "Official", "Its", "Hey", "The"]
+  };
 
-    const prefixes = {
-      business: ["Prime", "Nova", "Vertex", "Core", "Apex"],
-      brand: ["Luma", "Viva", "Zest", "Echo", "Aura"],
-      gaming: ["Shadow", "Rogue", "Phantom", "Blaze", "Fury"],
-      characters: ["Eldor", "Nyra", "Kael", "Zorin", "Lyra"],
-      tech: ["Byte", "Code", "Nex", "Sync", "Logic"],
-      product: ["Flex", "Ultra", "Max", "Smart", "Pure"],
-      domain: ["Get", "Try", "Go", "My", "The"],
-      creative: ["Muse", "Ink", "Dream", "Pixel", "Spark"],
-      pet: ["Buddy", "Luna", "Rocky", "Leo", "Bella"],
-      instagram: ["Insta", "Gram", "Vibe", "Snap", "Pic"],
-      tiktok: ["Tok", "Viral", "Clip", "Loop", "Buzz"],
-      youtube: ["Tube", "Play", "Cast", "Stream", "View"],
-      twitter: ["Tweet", "X", "Post", "Thread", "Byte"],
-      facebook: ["Face", "Book", "Social", "Net", "Hub"],
-      deviantart: ["Art", "Deviant", "Sketch", "Draw", "Ink"],
-      twitch: ["Live", "Stream", "Game", "Play", "Zone"],
-      kick: ["Kick", "Live", "Rush", "Flow", "Cast"],
-      username: ["Real", "Official", "Its", "Hey", "The"]
-    };
+  const pool = prefixes[selectedCategory] || ["Neo"];
 
-    const pool = prefixes[selectedCategory] || ["Pro", "Neo", "Zen"];
-
-    for (let i = 0; i < 9; i++) {
-      const p = pool[Math.floor(Math.random() * pool.length)];
-      const name = p + base + Math.floor(Math.random() * 99);
-      names.push(name);
-    }
-
-    return names;
+  function buildName(){
+    const p = pool[Math.floor(Math.random() * pool.length)];
+    const w = words[Math.floor(Math.random() * words.length)];
+    const s = ["Labs","Works","Hub","Zone","Forge","Studio"][Math.floor(Math.random()*6)];
+    return `${p}${w}${s}`;
   }
 
-  const generated = smartNames();
-
-  generated.forEach(n => {
+  for(let i=0;i<9;i++){
     const div = document.createElement("div");
-    div.className = "result-card";
-    div.textContent = n;
+    div.className = "result-item"; // usa tu CSS real
+    div.textContent = buildName();
     results.appendChild(div);
-  });
+  }
 
 });
