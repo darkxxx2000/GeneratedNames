@@ -5,17 +5,69 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Professional Name Generator</title>
 <link rel="stylesheet" href="styles.css">
+
+<style>
+/* ================= SOCIAL BAR (OCULTA POR DEFECTO) ================= */
+.social-bar {
+  display: none;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+  padding: 10px;
+}
+
+.social-bar.show {
+  display: flex;
+}
+
+/* ================= DESCRIPTION BOX 3D ================= */
+.generator {
+  margin-top: 25px;
+}
+
+#description {
+  width: 100%;
+  min-height: 140px;
+  padding: 20px;
+  margin-bottom: 15px;
+
+  border-radius: 14px;
+  border: 1px solid #2a2a2a;
+
+  background: linear-gradient(145deg, #1a1a1a, #222);
+
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.5;
+
+  box-shadow:
+    8px 8px 16px rgba(0,0,0,0.7),
+    -4px -4px 10px rgba(255,255,255,0.05);
+
+  outline: none;
+  resize: vertical;
+}
+
+/* Optional nicer button spacing */
+#generateButton {
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+</style>
+
 </head>
 <body>
 
 <main class="container">
 
   <h1>Professional Name Generator</h1>
+
   <p class="subtitle">
     Create powerful names for brands, business, characters, products and social media.
   </p>
 
-  <!-- ================= CATEGORÍAS ================= -->
+  <!-- ================= CATEGORIES ================= -->
   <section class="categories">
 
     <button class="cat-btn" data-cat="business">
@@ -30,11 +82,6 @@
 
     <button class="cat-btn" data-cat="gaming">
       <img src="icons/gaming.svg" alt="">
-      Gaming
-    </button>
-
-    <button class="cat-btn" data-cat="characters">
-      <img src="icons/characters.svg" alt="">
       Fiction Characters
     </button>
 
@@ -63,7 +110,7 @@
       Pet Names
     </button>
 
-    <!-- ✅ Social es un botón más del grid -->
+    <!-- SOCIAL MAIN BUTTON -->
     <button id="socialMain" class="cat-btn social-main">
       <img src="icons/social.svg" alt="">
       Social Media Names
@@ -71,53 +118,28 @@
 
   </section>
 
-  <!-- ✅ BARRA SOCIAL FUERA DEL GRID -->
+  <!-- ================= SOCIAL BAR ================= -->
   <div id="socialBar" class="social-bar">
-    <button data-cat="instagram">
-      <img src="icons/instagram.svg" alt="">
-      Instagram
-    </button>
-    <button data-cat="tiktok">
-      <img src="icons/tiktok.svg" alt="">
-      TikTok
-    </button>
-    <button data-cat="youtube">
-      <img src="icons/youtube.svg" alt="">
-      YouTube
-    </button>
-    <button data-cat="twitter">
-      <img src="icons/twitter.svg" alt="">
-      Twitter / X
-    </button>
-    <button data-cat="facebook">
-      <img src="icons/facebook.svg" alt="">
-      Facebook
-    </button>
-    <button data-cat="deviantart">
-      <img src="icons/deviantart.svg" alt="">
-      DeviantArt
-    </button>
-    <button data-cat="twitch">
-      <img src="icons/twitch.svg" alt="">
-      Twitch
-    </button>
-    <button data-cat="kick">
-      <img src="icons/kick.svg" alt="">
-      Kick
-    </button>
-    <button data-cat="username">
-      <img src="icons/user.svg" alt="">
-      Username
-    </button>
+
+    <button data-cat="instagram"><img src="icons/instagram.svg"> Instagram</button>
+    <button data-cat="tiktok"><img src="icons/tiktok.svg"> TikTok</button>
+    <button data-cat="youtube"><img src="icons/youtube.svg"> YouTube</button>
+    <button data-cat="twitter"><img src="icons/twitter.svg"> Twitter / X</button>
+    <button data-cat="facebook"><img src="icons/facebook.svg"> Facebook</button>
+    <button data-cat="deviantart"><img src="icons/deviantart.svg"> DeviantArt</button>
+    <button data-cat="twitch"><img src="icons/twitch.svg"> Twitch</button>
+    <button data-cat="kick"><img src="icons/kick.svg"> Kick</button>
+    <button data-cat="username"><img src="icons/user.svg"> Username</button>
+
   </div>
 
-  <!-- ================= GENERADOR ================= -->
+  <!-- ================= GENERATOR ================= -->
   <section class="generator">
     <textarea id="description" placeholder="Describe what you need..."></textarea>
     <button id="generateButton">Generate Names</button>
   </section>
 
-  <!-- ================= RESULTADOS ================= -->
+  <!-- ================= RESULTS ================= -->
   <section id="results" class="results"></section>
 
   <!-- ================= FOOTER ================= -->
