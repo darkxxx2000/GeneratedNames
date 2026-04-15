@@ -1,4 +1,3 @@
-// ================= ESTADO GLOBAL =================
 let selectedCategory = null;
 
 const textarea = document.getElementById("description");
@@ -10,14 +9,15 @@ const socialButtons = document.querySelectorAll("#socialBar button");
 const socialMain = document.getElementById("socialMain");
 const socialBar = document.getElementById("socialBar");
 
-// ======= BLOQUEAR ESCRITURA HASTA ELEGIR CATEGORÍA =======
+// ======= INIT STATE =======
 textarea.disabled = true;
 textarea.placeholder = "Select a category first...";
 
-// ================= SELECCIÓN DE CATEGORÍA =================
+// ================= CATEGORY HANDLER =================
 function setCategory(cat, btn) {
   selectedCategory = cat;
 
+  // limpiar active de todo MENOS socialMain (no es categoría real)
   document.querySelectorAll(".cat-btn, #socialBar button")
     .forEach(b => b.classList.remove("active"));
 
@@ -28,26 +28,27 @@ function setCategory(cat, btn) {
   textarea.focus();
 }
 
-// botones normales
+// ================= MAIN CATEGORY BUTTONS =================
 catButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     setCategory(btn.dataset.cat, btn);
   });
 });
 
-// botón social SOLO despliega (NO es categoría)
+// ================= SOCIAL TOGGLE ONLY =================
 socialMain.addEventListener("click", () => {
   socialBar.classList.toggle("show");
+  socialMain.classList.toggle("active");
 });
 
-// botones redes sociales
+// ================= SOCIAL BUTTONS (CATEGORY SELECTOR) =================
 socialButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     setCategory(btn.dataset.cat, btn);
   });
 });
 
-// ================= GENERADOR INTELIGENTE =================
+// ================= GENERATOR =================
 generateBtn.addEventListener("click", () => {
 
   if (!selectedCategory) {
@@ -63,7 +64,6 @@ generateBtn.addEventListener("click", () => {
 
   results.innerHTML = "";
 
-  // 🔥 palabras limpias y capitalizadas
   const words = desc
     .split(" ")
     .filter(w => w.length > 3)
@@ -92,16 +92,16 @@ generateBtn.addEventListener("click", () => {
 
   const pool = prefixes[selectedCategory] || ["Neo"];
 
-  function buildName(){
+  function buildName() {
     const p = pool[Math.floor(Math.random() * pool.length)];
-    const w = words[Math.floor(Math.random() * words.length)];
-    const s = ["Labs","Works","Hub","Zone","Forge","Studio"][Math.floor(Math.random()*6)];
+    const w = words[Math.floor(Math.random() * words.length)] || "";
+    const s = ["Labs","Works","Hub","Zone","Forge","Studio"][Math.floor(Math.random() * 6)];
     return `${p}${w}${s}`;
   }
 
-  for(let i=0;i<9;i++){
+  for (let i = 0; i < 9; i++) {
     const div = document.createElement("div");
-    div.className = "result-item"; // usa tu CSS real
+    div.className = "result-item";
     div.textContent = buildName();
     results.appendChild(div);
   }
