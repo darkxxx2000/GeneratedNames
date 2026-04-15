@@ -1,202 +1,304 @@
-/* ================= BASE ================= */
+/* ========================= */
+/* 🌌 BASE GENERAL          */
+/* ========================= */
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body{
-  font-family:'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top, #1a0826, #0d0614 70%);
-  color:#eee;
-  min-height:100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at top, #1a0826, #0d0614 60%);
+  color: #eee;
+  min-height: 100vh;
 }
 
-/* ================= CONTAINER ================= */
+main{
+  padding-top: 110px;
+}
 
+/* Contenedor central */
 .container{
-  max-width:1100px;
-  margin:auto;
-  padding:40px 20px;
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 20px;
 }
 
-/* ================= TITLE (FIX BRILLO) ================= */
+/* ========================= */
+/* 🏷️ TÍTULO Y DESCRIPCIÓN */
+/* ========================= */
 
 h1{
-  text-align:center;
-  font-size:3rem;
-  color:#c77dff;
-
-  text-shadow:
-    0 0 12px #c77dff,
-    0 0 28px #9d4edd,
-    0 0 55px #5a189a;
-
-  margin-bottom:10px;
+  text-align: center;
+  font-size: 3rem;
+  color: #c77dff;
+  text-shadow: 0 0 20px #9d4edd, 0 0 45px #5a189a;
+  margin-bottom: 12px;
 }
-
-/* ================= SUBTITLE ================= */
 
 .subtitle{
-  text-align:center;
-  color:#bdbdbd;
-  margin-bottom:30px;
+  text-align: center;
+  color: #bbb;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
 }
 
-/* ================= CATEGORIES GRID ================= */
+/* ========================= */
+/* 🧩 CATEGORÍAS            */
+/* ========================= */
 
 .categories{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:15px;
-  margin-bottom:20px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  margin-bottom: 35px;
 }
-
-/* ================= BUTTON (GLASS + DEPTH FIX) ================= */
 
 .cat-btn{
-  padding:15px;
-  border-radius:14px;
+  height: 110px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
 
-  background: rgba(35, 10, 55, 0.75);
+  /* 🔹 MÁS CLARO */
+  background: linear-gradient(145deg, #2e0a57, #4b0f7a);
 
-  border:1px solid rgba(255,255,255,0.15);
-
-  backdrop-filter: blur(12px);
-
-  color:#fff;
-
-  cursor:pointer;
-  transition:.25s;
-
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.05),
-    0 10px 25px rgba(0,0,0,0.35);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: .25s;
+  text-align: center;
+  font-weight: 600;
+  color: #f2e9ff;
 }
 
-/* hover FIX profundidad */
+.cat-btn img{
+  width: 28px;
+  height: 28px;
+}
+
 .cat-btn:hover{
-  transform:translateY(-3px);
-
-  border-color: rgba(199,125,255,0.6);
-
-  box-shadow:
-    0 0 18px rgba(199,125,255,0.25),
-    0 15px 30px rgba(0,0,0,0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 0 22px #9d4edd88;
+  border-color: #c77dff;
 }
 
-/* active state */
-.cat-btn.active{
-  border:1px solid #ffd700;
-  box-shadow:0 0 18px #ffd70055;
+/* ACTIVO */
+.cat-btn.active,
+.social-bar button.active{
+  border: 2px solid #ffd700;
+  box-shadow: 0 0 15px #ffd70088;
 }
 
-/* ================= SOCIAL BUTTON ================= */
+/* ========================= */
+/* ⭐ SOCIAL DORADO         */
+/* ========================= */
+
+.social-wrapper{
+  display: contents;
+}
 
 .social-main{
+  height: 110px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
   background: linear-gradient(145deg,#8b6f00,#d4af37);
-  color:#fff;
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: .25s;
+  text-align: center;
 }
 
-/* ================= SOCIAL BAR ================= */
+.social-main img{
+  width: 28px;
+  height: 28px;
+}
 
+.social-main:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 0 18px #ffd70066;
+}
+
+/* Barra horizontal redes */
 .social-bar{
-  display:none;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px;
-  margin-bottom:20px;
+  display: none;
+  margin-top: 14px;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 10px 4px;
 }
 
 .social-bar.show{
-  display:grid;
+  display: flex;
 }
 
 .social-bar button{
-  padding:10px;
-  border-radius:10px;
-
-  background: rgba(20,10,35,0.8);
-
-  border:1px solid rgba(255,255,255,0.12);
-
-  color:#ddd;
-
-  cursor:pointer;
-
-  transition:.2s;
+  min-width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  background: #1f1230;
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: .2s;
 }
 
 .social-bar button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 12px rgba(123,44,191,0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 0 12px #7b2cff66;
 }
 
-/* ================= TEXTAREA ================= */
-
-textarea{
-  width:100%;
-  min-height:140px;
-
-  padding:15px;
-
-  border-radius:12px;
-
-  background:#12081c;
-
-  border:1px solid rgba(255,255,255,0.1);
-
-  color:#fff;
-
-  outline:none;
+.social-bar img{
+  width: 30px;
 }
 
-/* ================= BUTTON GENERATE ================= */
+/* ========================= */
+/* 📝 ÁREA DE TEXTO         */
+/* ========================= */
+
+#description{
+  width: 100%;
+  padding: 18px;
+  border-radius: 12px;
+
+  /* 🔹 MÁS CLARO Y CONTRASTE */
+  border: 1px solid #9d4edd;
+  background: #1c0f2b;
+
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  resize: vertical;
+}
+
+#description:focus{
+  outline: none;
+  box-shadow: 0 0 12px #9d4edd88;
+}
+
+/* ========================= */
+/* 🚀 BOTÓN GENERAR         */
+/* ========================= */
 
 #generateButton{
-  margin-top:10px;
-  padding:12px 20px;
-
-  border:none;
-  border-radius:10px;
-
-  background:#7b2cbf;
-
-  color:#fff;
-
-  cursor:pointer;
-
-  transition:.2s;
+  display: block;
+  margin: auto;
+  padding: 14px 40px;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, #7b2cbf, #c77dff);
+  color: white;
+  transition: 0.3s;
 }
 
 #generateButton:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px #7b2cbf;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #c77dff;
 }
 
-/* ================= RESULTS ================= */
+/* ========================= */
+/* 📦 RESULTADOS            */
+/* ========================= */
 
 .results{
-  margin-top:30px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:15px;
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
 }
 
-/* ================= FOOTER ================= */
+.result-item{
+  background: #1a0b28;
+  border: 1px solid #5a189a;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.1rem;
+  transition: 0.25s;
+}
+
+.result-item:hover{
+  background: #240046;
+  box-shadow: 0 0 14px #7b2cbf;
+  cursor: pointer;
+}
+
+/* ========================= */
+/* 📎 FOOTER                */
+/* ========================= */
 
 footer{
-  margin-top:50px;
-  text-align:center;
+  margin-top: 70px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #888;
 }
 
 footer a{
-  color:#c77dff;
-  margin:0 10px;
-  text-decoration:none;
+  color: #c77dff;
+  text-decoration: none;
+  margin: 0 8px;
+}
+
+footer a:hover{
+  text-decoration: underline;
+}
+
+/* ============================= */
+/* 📱 RESPONSIVE TABLET/MOBILE */
+/* ============================= */
+
+@media (max-width: 900px){
+
+  .categories{
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .results{
+    grid-template-columns: 1fr;
+  }
+
+  #generateButton{
+    width: 100%;
+  }
+}
+
+/* ============================= */
+/* 📱 MOBILE PEQUEÑO           */
+/* ============================= */
+
+@media (max-width: 480px){
+
+  .categories{
+    grid-template-columns: 1fr;
+  }
+
+  h1{
+    font-size: 1.7rem;
+  }
+
+  .subtitle{
+    font-size: 1rem;
+  }
+
+  .cat-btn,
+  .social-main{
+    height: 95px;
+  }
+
+  .social-bar{
+    padding-bottom: 14px;
+  }
 }
