@@ -133,24 +133,26 @@ socialButtons.forEach(btn=>{
 function generateBatch(userText){
 
   const style = categoryStyles[selectedCategory];
-
   const keywords = extractKeywords(userText);
   const intent = detectIntent(keywords);
   const modifierPool = intentModifiers[intent];
 
-  const resultsSet = new Set();
+  const results = [];
+  const attemptsMax = 200; // evita loop infinito
+  let attempts = 0;
 
-  while(resultsSet.size < 24){
+  while(results.length < 24 && attempts < attemptsMax){
+    attempts++;
 
     const tone = random(style.tone);
     const suffix = random(style.suffix);
     const modifier = random(modifierPool);
     const kw1 = keywords[0] || "";
+    const kw2 = keywords[1] || "";
 
     let name = "";
 
     switch(selectedCategory){
-
       case "business":
         name = `${tone} ${modifier} ${suffix}`;
         break;
@@ -191,10 +193,12 @@ function generateBatch(userText){
         name = `${modifier}${kw1}${tone}${suffix}`.replace(/\s/g,"");
     }
 
-    resultsSet.add(name.trim());
+    if(!results.includes(name.trim())){
+      results.push(name.trim());
+    }
   }
 
-  return { results: Array.from(resultsSet) };
+  return { results };
 }
 
 // ================= RENDER =================
