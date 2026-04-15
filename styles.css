@@ -7,11 +7,13 @@
 }
 
 body{
-  font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top, #1a0826, #0d0614);
+  font-family:'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #1a0826, #0d0614 70%);
   color:#eee;
   min-height:100vh;
 }
+
+/* ================= CONTAINER ================= */
 
 .container{
   max-width:1100px;
@@ -19,21 +21,30 @@ body{
   padding:40px 20px;
 }
 
-/* ================= HEADER ================= */
+/* ================= TITLE (FIX BRILLO) ================= */
 
 h1{
   text-align:center;
   font-size:3rem;
   color:#c77dff;
+
+  text-shadow:
+    0 0 12px #c77dff,
+    0 0 28px #9d4edd,
+    0 0 55px #5a189a;
+
+  margin-bottom:10px;
 }
+
+/* ================= SUBTITLE ================= */
 
 .subtitle{
   text-align:center;
+  color:#bdbdbd;
   margin-bottom:30px;
-  color:#aaa;
 }
 
-/* ================= CATEGORIES ================= */
+/* ================= CATEGORIES GRID ================= */
 
 .categories{
   display:grid;
@@ -42,26 +53,58 @@ h1{
   margin-bottom:20px;
 }
 
+/* ================= BUTTON (GLASS + DEPTH FIX) ================= */
+
 .cat-btn{
   padding:15px;
-  border:none;
-  border-radius:12px;
-  background:#2a0a3d;
+  border-radius:14px;
+
+  background: rgba(35, 10, 55, 0.75);
+
+  border:1px solid rgba(255,255,255,0.15);
+
+  backdrop-filter: blur(12px);
+
   color:#fff;
+
   cursor:pointer;
-  transition:.2s;
+  transition:.25s;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.05),
+    0 10px 25px rgba(0,0,0,0.35);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:500;
 }
 
+/* hover FIX profundidad */
 .cat-btn:hover{
   transform:translateY(-3px);
-  background:#3b0f5c;
+
+  border-color: rgba(199,125,255,0.6);
+
+  box-shadow:
+    0 0 18px rgba(199,125,255,0.25),
+    0 15px 30px rgba(0,0,0,0.45);
 }
 
+/* active state */
 .cat-btn.active{
-  border:2px solid gold;
+  border:1px solid #ffd700;
+  box-shadow:0 0 18px #ffd70055;
 }
 
-/* ================= SOCIAL ================= */
+/* ================= SOCIAL BUTTON ================= */
+
+.social-main{
+  background: linear-gradient(145deg,#8b6f00,#d4af37);
+  color:#fff;
+}
+
+/* ================= SOCIAL BAR ================= */
 
 .social-bar{
   display:none;
@@ -76,79 +119,73 @@ h1{
 
 .social-bar button{
   padding:10px;
-  border:none;
   border-radius:10px;
-  background:#1b0a2a;
-  color:#ccc;
+
+  background: rgba(20,10,35,0.8);
+
+  border:1px solid rgba(255,255,255,0.12);
+
+  color:#ddd;
+
   cursor:pointer;
+
+  transition:.2s;
 }
 
-.social-main{
-  background:linear-gradient(145deg,#8b6f00,#d4af37);
+.social-bar button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 12px rgba(123,44,191,0.4);
 }
 
-/* ================= INPUT ================= */
-
-.generator{
-  margin-top:20px;
-}
+/* ================= TEXTAREA ================= */
 
 textarea{
   width:100%;
   min-height:140px;
+
   padding:15px;
+
   border-radius:12px;
-  background:#111;
+
+  background:#12081c;
+
+  border:1px solid rgba(255,255,255,0.1);
+
   color:#fff;
-  border:1px solid #333;
+
+  outline:none;
 }
 
-button#generateButton{
+/* ================= BUTTON GENERATE ================= */
+
+#generateButton{
   margin-top:10px;
   padding:12px 20px;
+
   border:none;
   border-radius:10px;
+
   background:#7b2cbf;
+
   color:#fff;
+
   cursor:pointer;
+
+  transition:.2s;
 }
 
-/* ================= RESULTS (NEW ENGINE) ================= */
+#generateButton:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px #7b2cbf;
+}
+
+/* ================= RESULTS ================= */
 
 .results{
   margin-top:30px;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:15px;
-}
-
-.card{
-  background:#1a0b28;
-  border:1px solid #3b0f5c;
-  padding:15px;
-  border-radius:12px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.name{
-  font-size:1.1rem;
-  font-weight:bold;
-}
-
-.tag{
-  font-size:0.8rem;
-  color:#aaa;
-}
-
-.copy{
-  padding:6px 10px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  background:#7b2cbf;
-  color:#fff;
 }
 
 /* ================= FOOTER ================= */
