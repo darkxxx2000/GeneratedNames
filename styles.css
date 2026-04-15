@@ -51,7 +51,7 @@ h1{
 
 .categories{
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* ← MODIFICADO */
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 18px;
   margin-bottom: 35px;
 }
@@ -92,22 +92,22 @@ h1{
 }
 
 /* ========================= */
-/* ⭐ SOCIAL DORADO (MOD)   */
+/* ⭐ SOCIAL DORADO         */
 /* ========================= */
 
 .social-wrapper{
-  display: contents; /* ← CLAVE */
+  display: contents;
 }
 
 .social-main{
-  height: 110px;              /* ← MISMO TAMAÑO */
+  height: 110px;
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.08);
   background: linear-gradient(145deg,#8b6f00,#d4af37);
   color: #fff;
   font-weight: 600;
   display: flex;
-  flex-direction: column;     /* ← IGUAL QUE cat-btn */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -126,27 +126,40 @@ h1{
   box-shadow: 0 0 18px #ffd70066;
 }
 
-/* Barra horizontal redes */
+/* ========================= */
+/* 🔗 SOCIAL BAR HORIZONTAL */
+/* ========================= */
+
 .social-bar{
   display: none;
-  margin-top: 12px;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 10px 0;
+  grid-column: 1 / -1;
+  margin-top: 14px;
+
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 10px;
 }
 
 .social-bar.show{
-  display: flex;
+  display: grid;
 }
 
 .social-bar button{
-  min-width: 60px;
-  height: 60px;
+  height: 85px;
   border-radius: 12px;
   border: 1px solid #333;
   background: #1b1229;
   cursor: pointer;
-  flex: 0 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  font-size: 0.75rem;
+  color: #ddd;
   transition: .2s;
 }
 
@@ -156,7 +169,7 @@ h1{
 }
 
 .social-bar img{
-  width: 28px;
+  width: 26px;
 }
 
 /* ========================= */
