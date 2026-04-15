@@ -13,6 +13,64 @@ const socialBar = document.getElementById("socialBar");
 textarea.disabled = true;
 textarea.placeholder = "Select a category first...";
 
+// ================= HELPERS =================
+function random(arr){
+  return arr[Math.floor(Math.random()*arr.length)];
+}
+
+function capitalize(word){
+  return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+// ================= CATEGORY STYLES (CONTEXT) =================
+const categoryStyles = {
+  business: {
+    tone: ["Prime","Vertex","Apex","Core","Noble","Summit"],
+    suffix: ["Solutions","Group","Enterprises","Holdings","Systems"]
+  },
+  brand: {
+    tone: ["Nexa","Luma","Vexa","Zyra","Kairo","Auro"],
+    suffix: ["",""]
+  },
+  gaming: {
+    tone: ["Shadow","Rogue","Phantom","Blaze","Fury","Venom"],
+    suffix: ["X","Z",""]
+  },
+  characters: {
+    tone: ["Eldor","Nyra","Kael","Zorin","Lyra","Vael"],
+    suffix: ["Nightfall","Stormborn","Darkwood","Ravencrest"]
+  },
+  tech: {
+    tone: ["Quantum","Byte","Nex","Logic","Sync","Cyber"],
+    suffix: ["AI","Labs","Systems","Tech","Digital"]
+  },
+  product: {
+    tone: ["Ultra","Smart","Flex","Pure","Max","Nova"],
+    suffix: ["Pro","Plus","Go","One"]
+  },
+  domain: {
+    tone: ["get","try","go","my","the"],
+    suffix: ["app","hub","online","site"]
+  },
+  creative: {
+    tone: ["Muse","Ink","Dream","Pixel","Spark","Echo"],
+    suffix: [""]
+  },
+  pet: {
+    tone: ["Luna","Rocky","Leo","Bella","Milo","Nala"],
+    suffix: [""]
+  },
+  instagram: { tone:["Vibe","Insta","Snap","Pic","Gram"], suffix:["xo","tv",""] },
+  tiktok: { tone:["Tok","Viral","Buzz","Clip","Loop"], suffix:["tv","live",""] },
+  youtube: { tone:["Tube","Cast","Play","View","Stream"], suffix:["tv","official",""] },
+  twitter: { tone:["Tweet","Thread","Post","Byte","X"], suffix:["io","hub",""] },
+  facebook: { tone:["Social","Net","Link","Hub","Face"], suffix:["zone",""] },
+  deviantart: { tone:["Art","Sketch","Draw","Ink","Deviant"], suffix:["lab",""] },
+  twitch: { tone:["Live","Game","Zone","Play","Stream"], suffix:["tv","gg",""] },
+  kick: { tone:["Kick","Rush","Flow","Cast","Live"], suffix:["tv","live",""] },
+  username: { tone:["Real","Hey","Its","The","Official"], suffix:["xo","yt",""] }
+};
+
 // ================= CATEGORY =================
 function setCategory(cat, btn){
   selectedCategory = cat;
@@ -39,50 +97,81 @@ socialButtons.forEach(btn=>{
   btn.addEventListener("click", ()=>setCategory(btn.dataset.cat, btn));
 });
 
-// ================= SMART PREFIXES =================
-const prefixes = {
-  business: ["Prime","Nova","Vertex","Core","Apex"],
-  brand: ["Luma","Viva","Zest","Echo","Aura"],
-  gaming: ["Shadow","Rogue","Phantom","Blaze","Fury"],
-  characters: ["Eldor","Nyra","Kael","Zorin","Lyra"],
-  tech: ["Byte","Code","Nex","Sync","Logic"],
-  product: ["Flex","Ultra","Max","Smart","Pure"],
-  domain: ["Get","Try","Go","My","The"],
-  creative: ["Muse","Ink","Dream","Pixel","Spark"],
-  pet: ["Buddy","Luna","Rocky","Leo","Bella"],
-  instagram: ["Insta","Vibe","Snap","Pic","Gram"],
-  tiktok: ["Tok","Viral","Clip","Buzz","Loop"],
-  youtube: ["Tube","Cast","Play","View","Stream"],
-  twitter: ["Tweet","Post","Thread","Byte","X"],
-  facebook: ["Social","Net","Face","Hub","Link"],
-  deviantart: ["Art","Sketch","Draw","Ink","Deviant"],
-  twitch: ["Live","Game","Play","Zone","Stream"],
-  kick: ["Kick","Rush","Live","Flow","Cast"],
-  username: ["Real","Official","Its","Hey","The"]
-};
+// ================= GENERATION ENGINE (CATEGORY CONTEXT) =================
+function generateBatch(userText){
 
-// ================= GENERATION ENGINE =================
-function generateBatch(text){
+  const style = categoryStyles[selectedCategory];
 
-  const words = text.split(" ");
-  const base = words.slice(0,2).join("");
+  const cleanWords = userText
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g,"")
+    .split(" ")
+    .filter(w=>w.length>3);
 
-  const pool = prefixes[selectedCategory] || ["Neo","Zen","Pro"];
+  const keyword = cleanWords[0] 
+      ? capitalize(cleanWords[0]) 
+      : "";
 
-  const results = [];
+  const resultsSet = new Set();
 
-  for(let i=0;i<12;i++){
-    const p = pool[Math.floor(Math.random()*pool.length)];
-    const n = p + base + Math.floor(Math.random()*99);
-    results.push(n);
+  while(resultsSet.size < 24){
+
+    const tone = random(style.tone);
+    const suffix = random(style.suffix);
+
+    let name = "";
+
+    switch(selectedCategory){
+
+      case "business":
+        name = tone + " " + suffix;
+        break;
+
+      case "brand":
+        name = tone + keyword;
+        break;
+
+      case "gaming":
+        name = tone + keyword + suffix;
+        break;
+
+      case "characters":
+        name = tone + " " + suffix;
+        break;
+
+      case "tech":
+        name = tone + " " + keyword + " " + suffix;
+        break;
+
+      case "product":
+        name = tone + " " + keyword + " " + suffix;
+        break;
+
+      case "domain":
+        name = tone + keyword.toLowerCase() + suffix;
+        break;
+
+      case "creative":
+        name = tone + " " + keyword;
+        break;
+
+      case "pet":
+        name = tone;
+        break;
+
+      // SOCIAL / USERNAMES
+      default:
+        name = (tone + keyword + suffix).replace(/\s/g,"");
+    }
+
+    resultsSet.add(name.trim());
   }
 
-  return { results };
+  return { results: Array.from(resultsSet) };
 }
 
 // ================= RENDER =================
 function render(list){
-
   results.innerHTML = "";
 
   list.forEach(name=>{
@@ -97,6 +186,7 @@ function render(list){
 generateBtn.addEventListener("click", ()=>{
 
   if(!selectedCategory) return alert("Select category");
+
   const text = textarea.value.trim();
   if(!text) return alert("Write description");
 
