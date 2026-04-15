@@ -302,3 +302,31 @@ footer a:hover{
     padding-bottom: 14px;
   }
 }
+/* SOCIAL BAR COMO FILA COMPLETA */
+.social-wrapper{
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+}
+
+.social-bar{
+  display: none;
+  margin-top: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.social-bar.show{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.social-bar button{
+  background: #2a0f44;
+  border: 1px solid #7a3cff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
