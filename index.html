@@ -35,12 +35,12 @@
 
     <button class="cat-btn" data-cat="characters">
       <img src="icons/characters.svg" alt="">
-      Fantasy Characters
+      Fiction Character
     </button>
 
     <button class="cat-btn" data-cat="tech">
       <img src="icons/tech.svg" alt="">
-      Tech Startup
+      Tech / Startup
     </button>
 
     <button class="cat-btn" data-cat="product">
@@ -50,12 +50,12 @@
 
     <button class="cat-btn" data-cat="domain">
       <img src="icons/domain.svg" alt="">
-      Domain / Website
+      Domain
     </button>
 
     <button class="cat-btn" data-cat="creative">
       <img src="icons/creative.svg" alt="">
-      Creative Names
+      Creative
     </button>
 
     <button class="cat-btn" data-cat="pet">
@@ -63,63 +63,27 @@
       Pet Names
     </button>
 
-    <!-- 🟡 CATEGORÍA SEO FUERTE -->
-    <button id="socialMain" class="cat-btn social-main">
-      <img src="icons/social.svg" alt="">
-      Social Media Names
-    </button>
+    <!-- ✅ SOCIAL COMO UNO MÁS DEL GRID -->
+    <div class="social-wrapper">
+      <button id="socialMain" class="cat-btn social-main">
+        <img src="icons/social.svg" alt="">
+        Social Media
+      </button>
+
+      <div id="socialBar" class="social-bar">
+        <button data-cat="instagram"><img src="icons/instagram.svg" alt=""></button>
+        <button data-cat="tiktok"><img src="icons/tiktok.svg" alt=""></button>
+        <button data-cat="youtube"><img src="icons/youtube.svg" alt=""></button>
+        <button data-cat="twitter"><img src="icons/twitter.svg" alt=""></button>
+        <button data-cat="facebook"><img src="icons/facebook.svg" alt=""></button>
+        <button data-cat="deviantart"><img src="icons/deviantart.svg" alt=""></button>
+        <button data-cat="twitch"><img src="icons/twitch.svg" alt=""></button>
+        <button data-cat="kick"><img src="icons/kick.svg" alt=""></button>
+        <button data-cat="username"><img src="icons/user.svg" alt=""></button>
+      </div>
+    </div>
 
   </section>
-
-  <!-- ================= BARRA SOCIAL (SEO REAL) ================= -->
-  <div id="socialBar" class="social-bar">
-
-    <button data-cat="instagram">
-      <img src="icons/instagram.svg" alt="">
-      Instagram Names
-    </button>
-
-    <button data-cat="tiktok">
-      <img src="icons/tiktok.svg" alt="">
-      TikTok Names
-    </button>
-
-    <button data-cat="youtube">
-      <img src="icons/youtube.svg" alt="">
-      YouTube Names
-    </button>
-
-    <button data-cat="twitter">
-      <img src="icons/twitter.svg" alt="">
-      Twitter / X Names
-    </button>
-
-    <button data-cat="facebook">
-      <img src="icons/facebook.svg" alt="">
-      Facebook Names
-    </button>
-
-    <button data-cat="deviantart">
-      <img src="icons/deviantart.svg" alt="">
-      DeviantArt Names
-    </button>
-
-    <button data-cat="twitch">
-      <img src="icons/twitch.svg" alt="">
-      Twitch Names
-    </button>
-
-    <button data-cat="kick">
-      <img src="icons/kick.svg" alt="">
-      Kick Names
-    </button>
-
-    <button data-cat="username">
-      <img src="icons/user.svg" alt="">
-      General Username Ideas
-    </button>
-
-  </div>
 
   <!-- ================= GENERADOR ================= -->
   <section class="generator">
@@ -141,15 +105,6 @@
 </main>
 
 <script src="js/app.js"></script>
-
-<script>
-const socialMain = document.getElementById("socialMain");
-const socialBar = document.getElementById("socialBar");
-
-socialMain.addEventListener("click", () => {
-  socialBar.classList.toggle("show");
-});
-</script>
 
 </body>
 </html>
