@@ -60,8 +60,6 @@ h1{
   height: 110px;
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.12);
-
-  /* 🔹 MÁS CLARO */
   background: linear-gradient(145deg, #2e0a57, #4b0f7a);
 
   display: flex;
@@ -99,7 +97,7 @@ h1{
 /* ========================= */
 
 .social-wrapper{
-  display: contents;
+  grid-column: 1 / -1;
 }
 
 .social-main{
@@ -134,8 +132,8 @@ h1{
   display: none;
   margin-top: 14px;
   gap: 12px;
-  overflow-x: auto;
-  padding: 10px 4px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .social-bar.show{
@@ -149,7 +147,6 @@ h1{
   border: 1px solid #333;
   background: #1f1230;
   cursor: pointer;
-  flex: 0 0 auto;
   transition: .2s;
 }
 
@@ -170,11 +167,8 @@ h1{
   width: 100%;
   padding: 18px;
   border-radius: 12px;
-
-  /* 🔹 MÁS CLARO Y CONTRASTE */
   border: 1px solid #9d4edd;
   background: #1c0f2b;
-
   color: #fff;
   font-size: 1.1rem;
   margin-bottom: 25px;
@@ -301,55 +295,4 @@ footer a:hover{
   .social-bar{
     padding-bottom: 14px;
   }
-}
-/* SOCIAL BAR COMO FILA COMPLETA */
-.social-wrapper{
-  grid-column: 1 / -1;
-  display: flex;
-  flex-direction: column;
-}
-
-.social-bar{
-  display: none;
-  margin-top: 12px;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.social-bar.show{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.social-bar button{
-  background: #2a0f44;
-  border: 1px solid #7a3cff;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-/* SOCIAL BAR EN HILERA RESPONSIVE */
-.social-bar{
-  display: none;
-  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.social-bar.show{
-  display: grid;
-}
-
-.social-bar button{
-  background: #2a0d44;
-  border: 1px solid #a855f7;
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.social-bar img{
-  width: 22px;
 }
