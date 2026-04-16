@@ -9,73 +9,64 @@ const socialButtons = document.querySelectorAll("#socialBar button");
 const socialMain = document.getElementById("socialMain");
 const socialBar = document.getElementById("socialBar");
 
+// ================= INIT =================
 textarea.disabled = true;
 textarea.placeholder = "Select a category first...";
 
-function random(arr){
-  return arr[Math.floor(Math.random()*arr.length)];
+// ================= HELPERS =================
+const rand = arr => arr[Math.floor(Math.random()*arr.length)];
+const cap = w => w.charAt(0).toUpperCase() + w.slice(1);
+
+// ================= SYLLABLE ENGINE =================
+const syllables = [
+  "zor","vel","kai","dra","nyx","vor","lum","vex","aria","thal",
+  "zen","quor","ryn","lex","myr","sol","nex","pyx","tor","vyn"
+];
+
+function makeWord(parts=2){
+  let w="";
+  for(let i=0;i<parts;i++) w += rand(syllables);
+  return cap(w);
 }
 
-function capitalize(word){
-  return word.charAt(0).toUpperCase() + word.slice(1);
-}
-
-/* CATEGORY STYLES */
-const categoryStyles = {
-  business:{tone:["Prime","Vertex","Apex","Core","Noble","Summit"],suffix:["Solutions","Group","Enterprises","Holdings","Systems"]},
-  brand:{tone:["Nexa","Luma","Vexa","Zyra","Kairo","Auro"],suffix:[""]},
-  gaming:{tone:["Shadow","Rogue","Phantom","Blaze","Fury","Venom"],suffix:["X","Z",""]},
-  characters:{tone:["Eldor","Nyra","Kael","Zorin","Lyra","Vael"],suffix:["Nightfall","Stormborn","Darkwood","Ravencrest"]},
-  tech:{tone:["Quantum","Byte","Nex","Logic","Sync","Cyber"],suffix:["AI","Labs","Systems","Tech","Digital"]},
-  product:{tone:["Ultra","Smart","Flex","Pure","Max","Nova"],suffix:["Pro","Plus","Go","One"]},
-  domain:{tone:["get","try","go","my","the"],suffix:["app","hub","online","site"]},
-  creative:{tone:["Muse","Ink","Dream","Pixel","Spark","Echo"],suffix:[""]},
-  pet:{tone:["Luna","Rocky","Leo","Bella","Milo","Nala"],suffix:[""]},
-  instagram:{tone:["Vibe","Insta","Snap","Pic","Gram"],suffix:["xo","tv",""]},
-  tiktok:{tone:["Tok","Viral","Buzz","Clip","Loop"],suffix:["tv","live",""]},
-  youtube:{tone:["Tube","Cast","Play","View","Stream"],suffix:["tv","official",""]},
-  twitter:{tone:["Tweet","Thread","Post","Byte","X"],suffix:["io","hub",""]},
-  facebook:{tone:["Social","Net","Link","Hub","Face"],suffix:["zone",""]},
-  deviantart:{tone:["Art","Sketch","Draw","Ink","Deviant"],suffix:["lab",""]},
-  twitch:{tone:["Live","Game","Zone","Play","Stream"],suffix:["tv","gg",""]},
-  kick:{tone:["Kick","Rush","Flow","Cast","Live"],suffix:["tv","live",""]},
-  username:{tone:["Real","Hey","Its","The","Official"],suffix:["xo","yt",""]}
+// ================= LEXIC POOLS =================
+const lexic = {
+  dark:["Shadow","Void","Night","Obsidian","Raven","Phantom"],
+  tech:["Quantum","Byte","Cyber","Nexus","Logic","Sync"],
+  cute:["Mimi","Lulu","Bunny","Puff","Nala","Milo"],
+  power:["Ultra","Hyper","Volt","Turbo","Max"],
+  fantasy:["Eld","Rune","Myth","Arc","Dragon","Storm"],
+  business:["Group","Systems","Holdings","Solutions","Enterprises"],
+  domain:["app","hub","site","online","web"]
 };
 
-/* PARSER INTELIGENTE */
+// ================= PARSER =================
 function extractKeywords(text){
   return text.toLowerCase()
     .replace(/[^a-z0-9\s]/g,"")
     .split(" ")
-    .filter(w => w.length > 3)
-    .slice(0,4)
-    .map(capitalize);
+    .filter(w=>w.length>3)
+    .slice(0,3)
+    .map(cap);
 }
 
-function detectIntent(words){
-  const joined = words.join(" ").toLowerCase();
-  if(joined.match(/dark|shadow|night|evil|horror/)) return "dark";
-  if(joined.match(/cute|sweet|soft|baby|pet|dog|cat/)) return "cute";
-  if(joined.match(/tech|ai|digital|cyber|future/)) return "tech";
-  if(joined.match(/fast|speed|energy|power/)) return "power";
-  if(joined.match(/magic|fantasy|dragon|king|queen/)) return "fantasy";
+function detectIntent(text){
+  const t = text.toLowerCase();
+  if(t.match(/dark|shadow|evil|night|horror/)) return "dark";
+  if(t.match(/cute|pet|baby|soft/)) return "cute";
+  if(t.match(/tech|ai|cyber|digital|future/)) return "tech";
+  if(t.match(/fast|power|energy|speed/)) return "power";
+  if(t.match(/magic|fantasy|dragon|king/)) return "fantasy";
   return "neutral";
 }
 
-const intentModifiers = {
-  dark:["Shadow","Void","Night","Obsidian"],
-  cute:["Mimi","Bunny","Lulu","Puff"],
-  tech:["Neo","Quantum","Byte","Nex"],
-  power:["Ultra","Hyper","Turbo","Volt"],
-  fantasy:["Eld","Myth","Rune","Arc"],
-  neutral:[""]
-};
-
-/* CATEGORY */
+// ================= CATEGORY =================
 function setCategory(cat, btn){
   selectedCategory = cat;
+
   document.querySelectorAll(".cat-btn, #socialBar button")
     .forEach(b => b.classList.remove("active"));
+
   btn.classList.add("active");
   textarea.disabled = false;
   textarea.focus();
@@ -93,49 +84,61 @@ socialButtons.forEach(btn=>{
   btn.addEventListener("click", ()=>setCategory(btn.dataset.cat, btn));
 });
 
-/* GENERADOR INTELIGENTE */
-function generateBatch(userText){
-  const style = categoryStyles[selectedCategory] || categoryStyles["creative"];
+// ================= NAME PATTERNS =================
+function buildName(keywords, intent){
 
-  const keywords = extractKeywords(userText);
-  const intent = detectIntent(keywords);
-  const modifierPool = intentModifiers[intent];
+  const kw = keywords[0] || "";
+  const intentWord = lexic[intent] ? rand(lexic[intent]) : "";
 
-  const resultsArr = [];
-  let attempts = 0;
+  switch(selectedCategory){
 
-  while(resultsArr.length < 24 && attempts < 200){
-    attempts++;
+    case "business":
+      return `${makeWord(2)} ${rand(lexic.business)}`;
 
-    const tone = random(style.tone);
-    const suffix = random(style.suffix);
-    const modifier = random(modifierPool);
-    const kw1 = keywords[0] || "";
+    case "brand":
+      return `${makeWord(2)}${kw}`;
 
-    let name = "";
+    case "gaming":
+      return `${intentWord}${makeWord(1)}${kw}`;
 
-    switch(selectedCategory){
-      case "business": name = `${tone} ${modifier} ${suffix}`; break;
-      case "brand": name = `${modifier}${kw1}${tone}`; break;
-      case "gaming": name = `${modifier}${tone}${kw1}${suffix}`; break;
-      case "characters": name = `${tone} ${modifier}${kw1}`; break;
-      case "tech": name = `${modifier} ${kw1} ${tone} ${suffix}`; break;
-      case "product": name = `${tone} ${kw1} ${suffix}`; break;
-      case "domain": name = `${tone}${kw1}${suffix}`.toLowerCase(); break;
-      case "creative": name = `${modifier} ${kw1} ${tone}`; break;
-      case "pet": name = `${modifier}${tone}`; break;
-      default: name = `${modifier}${kw1}${tone}${suffix}`.replace(/\s/g,"");
-    }
+    case "characters":
+      return `${makeWord(2)} ${intentWord}`;
 
-    if(!resultsArr.includes(name.trim())){
-      resultsArr.push(name.trim());
-    }
+    case "tech":
+      return `${intentWord} ${makeWord(2)}`;
+
+    case "product":
+      return `${intentWord} ${kw} Pro`;
+
+    case "domain":
+      return `${makeWord(2).toLowerCase()}${rand(lexic.domain)}`;
+
+    case "creative":
+      return `${makeWord(3)}`;
+
+    case "pet":
+      return rand(lexic.cute);
+
+    default: // social / usernames
+      return `${intentWord}${makeWord(1)}${kw}`.replace(/\s/g,"");
   }
-
-  return { results: resultsArr };
 }
 
-/* RENDER */
+// ================= GENERATE =================
+function generateBatch(text){
+  const keywords = extractKeywords(text);
+  const intent = detectIntent(text);
+
+  const set = new Set();
+
+  while(set.size < 24){
+    set.add(buildName(keywords, intent));
+  }
+
+  return Array.from(set);
+}
+
+// ================= RENDER =================
 function render(list){
   results.innerHTML = "";
   list.forEach(name=>{
@@ -146,10 +149,12 @@ function render(list){
   });
 }
 
+// ================= BUTTON =================
 generateBtn.addEventListener("click", ()=>{
   if(!selectedCategory) return alert("Select category");
   const text = textarea.value.trim();
   if(!text) return alert("Write description");
-  const batch = generateBatch(text);
-  render(batch.results);
+
+  const names = generateBatch(text);
+  render(names);
 });
