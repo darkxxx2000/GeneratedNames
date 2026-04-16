@@ -330,3 +330,26 @@ footer a:hover{
   border-radius: 10px;
   cursor: pointer;
 }
+/* SOCIAL BAR EN HILERA RESPONSIVE */
+.social-bar{
+  display: none;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.social-bar.show{
+  display: grid;
+}
+
+.social-bar button{
+  background: #2a0d44;
+  border: 1px solid #a855f7;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.social-bar img{
+  width: 22px;
+}
