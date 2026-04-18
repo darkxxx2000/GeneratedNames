@@ -49,11 +49,17 @@ const categoryStyles = {
 // ================= CATEGORY =================
 function setCategory(cat, btn){
   selectedCategory = cat;
+
   document.querySelectorAll(".cat-btn, #socialBar button")
     .forEach(b => b.classList.remove("active"));
+
   btn.classList.add("active");
+
   textarea.disabled = false;
   textarea.focus();
+
+  // ocultar barra social al elegir red
+  socialBar.classList.remove("show");
 }
 
 // ================= EVENTS =================
@@ -65,11 +71,12 @@ socialMain.addEventListener("click", ()=>{
   socialBar.classList.toggle("show");
 });
 
+// 🔥 FIX SOCIAL BUTTONS
 document.querySelectorAll("#socialBar button").forEach(btn=>{
   btn.addEventListener("click", ()=>setCategory(btn.dataset.cat, btn));
 });
 
-// ================= INTELLIGENT CORE =================
+// ================= INTELIGENCIA CONTEXTUAL =================
 function extractKeywords(text){
   return text
     .toLowerCase()
@@ -77,41 +84,69 @@ function extractKeywords(text){
     .split(" ")
     .filter(w => w.length > 3)
     .map(capitalize)
-    .slice(0,3);
+    .slice(0,4);
 }
 
-function buildName(style, keywords){
+function interpretContext(keywords){
+  const map = {
+    dog:["Paw","Bark","Tail","Fur"],
+    cat:["Purr","Whisker","Claw"],
+    tech:["Code","Data","Net","Bit","Cyber"],
+    game:["XP","Loot","Quest","Arena"],
+    art:["Ink","Sketch","Pixel","Muse"],
+    business:["Trade","Capital","Market","Growth"]
+  };
+
+  let extra = [];
+
+  keywords.forEach(k=>{
+    const low = k.toLowerCase();
+    Object.keys(map).forEach(key=>{
+      if(low.includes(key)){
+        extra = extra.concat(map[key]);
+      }
+    });
+  });
+
+  return extra;
+}
+
+function buildSmartName(style, keywords, context){
 
   const tone = random(style.tone);
   const suffix = random(style.suffix);
   const kw = random(keywords) || "";
+  const ctx = random(context) || "";
+
+  let name = `${tone} ${ctx} ${kw} ${suffix}`.replace(/\s+/g," ").trim();
 
   if(selectedCategory === "pet"){
-    return `${tone}${kw}`;
+    name = `${tone}${ctx}`;
   }
 
   if(selectedCategory === "domain"){
-    return `${tone}${kw}${suffix}`.toLowerCase();
+    name = name.replace(/\s/g,"").toLowerCase();
   }
 
-  return `${tone} ${kw} ${suffix}`.trim();
+  return name;
 }
 
-// 🔥 GENERADOR ANTIBLOQUEO
+// ================= GENERADOR ANTIBLOQUEO PRO =================
 function generateBatch(userText){
 
   const style = categoryStyles[selectedCategory];
   const keywords = extractKeywords(userText);
+  const context = interpretContext(keywords);
 
-  const MAX_RESULTS = 18;
-  const MAX_ATTEMPTS = 200;
+  const MAX_RESULTS = 24;
+  const MAX_ATTEMPTS = 500;
 
   const generated = new Set();
   let attempts = 0;
 
   while(generated.size < MAX_RESULTS && attempts < MAX_ATTEMPTS){
     attempts++;
-    generated.add(buildName(style, keywords));
+    generated.add(buildSmartName(style, keywords, context));
   }
 
   return Array.from(generated);
