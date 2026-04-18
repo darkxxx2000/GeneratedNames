@@ -16,6 +16,7 @@ textarea.placeholder = "Select a category first...";
 
 // ================= HELPERS =================
 function random(arr){
+  if(!arr || arr.length === 0) return "";
   return arr[Math.floor(Math.random()*arr.length)];
 }
 
@@ -64,12 +65,11 @@ socialMain.addEventListener("click", ()=>{
   socialBar.classList.toggle("show");
 });
 
-// 🔥 FIX SOCIAL BUTTONS
 document.querySelectorAll("#socialBar button").forEach(btn=>{
   btn.addEventListener("click", ()=>setCategory(btn.dataset.cat, btn));
 });
 
-// ================= GENERATOR INTELIGENTE =================
+// ================= INTELLIGENT CORE =================
 function extractKeywords(text){
   return text
     .toLowerCase()
@@ -80,35 +80,41 @@ function extractKeywords(text){
     .slice(0,3);
 }
 
+function buildName(style, keywords){
+
+  const tone = random(style.tone);
+  const suffix = random(style.suffix);
+  const kw = random(keywords) || "";
+
+  if(selectedCategory === "pet"){
+    return `${tone}${kw}`;
+  }
+
+  if(selectedCategory === "domain"){
+    return `${tone}${kw}${suffix}`.toLowerCase();
+  }
+
+  return `${tone} ${kw} ${suffix}`.trim();
+}
+
+// 🔥 GENERADOR ANTIBLOQUEO
 function generateBatch(userText){
 
   const style = categoryStyles[selectedCategory];
   const keywords = extractKeywords(userText);
 
-  const results = new Set();
+  const MAX_RESULTS = 18;
+  const MAX_ATTEMPTS = 200;
 
-  while(results.size < 18){
+  const generated = new Set();
+  let attempts = 0;
 
-    const tone = random(style.tone);
-    const suffix = random(style.suffix);
-    const kw = random(keywords) || "";
-
-    let name = "";
-
-    if(selectedCategory === "pet"){
-      name = tone + (kw || "");
-    }
-    else if(selectedCategory === "domain"){
-      name = (tone + kw + suffix).toLowerCase();
-    }
-    else{
-      name = `${tone} ${kw} ${suffix}`;
-    }
-
-    results.add(name.trim());
+  while(generated.size < MAX_RESULTS && attempts < MAX_ATTEMPTS){
+    attempts++;
+    generated.add(buildName(style, keywords));
   }
 
-  return Array.from(results);
+  return Array.from(generated);
 }
 
 // ================= RENDER =================
